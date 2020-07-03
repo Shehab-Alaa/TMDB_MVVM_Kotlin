@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nowPlayingMoviesItem">
+
+    <fragment
+        android:id="@+id/nowPlayingMoviesItem"
+        android:name="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesFragment"
+        android:label="Now Playing Movies"
+        tools:layout="@layout/fragment_movies">
+        <argument
+            android:name="categoryType"
+            app:argType="string"
+            android:defaultValue="now_playing" />
+    </fragment>
+    <fragment
+        android:id="@+id/popularMoviesItem"
+        android:name="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesFragment"
+        android:label="Popular Movies"
+        tools:layout="@layout/fragment_movies">
+        <argument
+            android:name="categoryType"
+            app:argType="string"
+            android:defaultValue="popular" />
+    </fragment>
+    <fragment
+        android:id="@+id/topRatedMoviesItem"
+        android:name="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesFragment"
+        android:label="Top Rated Movies"
+        tools:layout="@layout/fragment_movies">
+        <argument
+            android:name="categoryType"
+            app:argType="string"
+            android:defaultValue="top_rated" />
+    </fragment>
+    <fragment
+        android:id="@+id/upcomingMoviesItem"
+        android:name="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesFragment"
+        android:label="Upcoming Movies"
+        tools:layout="@layout/fragment_movies">
+        <argument
+            android:name="categoryType"
+            app:argType="string"
+            android:defaultValue="upcoming" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteMoviesItem"
+        android:name="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesFragment"
+        android:label="Favorite Movies">
+        <argument
+            android:name="categoryType"
+            app:argType="string"
+            android:defaultValue="favorite" />
+    </fragment>
+
+</navigation>

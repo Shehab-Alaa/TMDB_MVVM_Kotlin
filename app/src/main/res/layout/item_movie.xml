@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="movieItemViewModel"
+            type="com.example.tmdbcleanarchitecture.ui.main.movie.MovieItemViewModel" />
+    </data>
+
+<androidx.cardview.widget.CardView
+    android:id="@+id/movieItem"
+    android:layout_width="180dp"
+    android:layout_height="300dp"
+    app:cardCornerRadius="5dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:onClick="@{(view)->movieItemViewModel.onItemClick(view)}">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/movie_poster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:background="@color/dBackground"
+            android:posterSrc="@{movieItemViewModel.moviePoster}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:alpha="0.7"
+            android:background="#737373"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/movie_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="serif-monospace"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:text="@{movieItemViewModel.movieTitle}"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+
+</androidx.cardview.widget.CardView>
+
+</layout>

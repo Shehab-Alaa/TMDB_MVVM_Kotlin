@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TMDBCleanArchitecture</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="empty_screen">We do not have anything\nhere right now.</string>
+    <string name="please_retry">Please Retry</string>
+    <string name="retry">Retry</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="top_rated_movies">Top Rated Movies</string>
+    <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="favorite_movies">Favorite Movies</string>
+    <string name="now_playing_movies">Now Playing Movies</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="other">Other</string>
+    <string name="action_settings">settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="the_moviest">The Moviest</string>
+</resources>

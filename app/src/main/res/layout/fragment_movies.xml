@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="moviesViewModel"
+            type="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_ref"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Refresh">
+        </Button>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adapterList="@{moviesViewModel.moviesPagedList}"
+            tools:listitem="@layout/item_movie"
+            android:scrollbars="vertical">
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@color/colorAccent"
+            android:visibility="@{moviesViewModel.isLoading ? View.VISIBLE : View.INVISIBLE}"/>
+
+    </RelativeLayout>
+
+</layout>

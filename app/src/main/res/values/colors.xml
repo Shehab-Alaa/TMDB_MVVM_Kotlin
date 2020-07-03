@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5e6c75</color>
+    <color name="colorPrimaryDark">#003048</color>
+    <color name="colorAccent">#107db2</color>
+    <color name="dBackground">#3c454b</color>
+    <color name="dHeader">#003048</color>
+    <color name="dToolbar">#5e6c75</color>
+    <color name="dNavBackground">#292f33</color>
+    <color name="dText">#d2d2d2</color>
+    <color name="dRVBackground">#1f2326</color>
+    <color name="goldenText">#e5b024</color>
+</resources>
