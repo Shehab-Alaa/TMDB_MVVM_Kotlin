@@ -29,15 +29,16 @@ class MovieDetailsViewModel(dataManager: DataManager) : BaseViewModel(dataManage
     }
 
     val isFavoriteMovie : MutableLiveData<Boolean> by lazy {
-        // To Be Done Using DataBase
-        MutableLiveData<Boolean>(false)
+        getDataManager().getDatabaseRepository().checkFavoriteMovie(movie.id)
     }
 
     fun onFavoriteBtnClick() {
         if(isFavoriteMovie.value!!){
-            // Remove From Database
+            getDataManager().getDatabaseRepository().deleteFavoriteMovie(movie.id)
+            isFavoriteMovie.postValue(false)
         }else{
-            // Add To Database
+            getDataManager().getDatabaseRepository().addFavoriteMovie(movie)
+            isFavoriteMovie.postValue(true)
         }
     }
 }

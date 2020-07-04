@@ -70,10 +70,11 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteMoviesItem"
-        android:name="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesFragment"
-        android:label="Favorite Movies">
+        android:name="com.example.tmdbcleanarchitecture.ui.main.favorite.FavoriteMoviesFragment"
+        android:label="Favorite Movies"
+        tools:layout="@layout/fragment_favorite_movies">
         <action
-            android:id="@+id/action_MoviesFragment_To_MovieDetailsFragment"
+            android:id="@+id/action_favoriteMoviesFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
         <argument
             android:name="categoryType"
