@@ -57,14 +57,6 @@ data class MovieDetails (
     @Expose
     var posterPath: String? = null  ,
 
-    @SerializedName("production_companies")
-    @Expose
-    var productionCompanies: List<ProductionCompany>? = null ,
-
-    @SerializedName("production_countries")
-    @Expose
-    var productionCountries: List<ProductionCountry>? = null ,
-
     @SerializedName("release_date")
     @Expose
     var releaseDate: String? = null ,

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.tmdbcleanarchitecture.data.DataManager
 import com.example.tmdbcleanarchitecture.ui.MainViewModel
 import com.example.tmdbcleanarchitecture.ui.main.movie.MoviesViewModel
+import com.example.tmdbcleanarchitecture.ui.main.movie_details.MovieDetailsViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelsFactory(private val dataManager: DataManager) : ViewModelProvider.NewInstanceFactory() {
@@ -14,7 +15,7 @@ class ViewModelsFactory(private val dataManager: DataManager) : ViewModelProvide
             modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(dataManager) as T
             modelClass.isAssignableFrom(MoviesViewModel::class.java) -> MoviesViewModel(dataManager) as T
             //modelClass.isAssignableFrom(FavoriteMoviesViewModel::class.java) -> FavoriteMoviesViewModel(dataManager) as T
-            //modelClass.isAssignableFrom(MovieDetailsViewModel::class.java) -> MovieDetailsViewModel(dataManager) as T
+            modelClass.isAssignableFrom(MovieDetailsViewModel::class.java) -> MovieDetailsViewModel(dataManager) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

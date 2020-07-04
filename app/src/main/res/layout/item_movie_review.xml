@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+        <variable
+            name="movieReview"
+            type="com.example.tmdbcleanarchitecture.data.model.MovieReview" />
+    </data>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="@color/colorPrimaryDark"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{movieReview.author}"
+            android:textSize="18dp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/author_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{movieReview.content}"
+            android:textSize="16dp"
+            android:textColor="@color/dText"
+            />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
+
+</layout>

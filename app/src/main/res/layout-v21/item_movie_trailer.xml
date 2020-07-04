@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+       <variable
+           name="movieTrailerViewModel"
+           type="com.example.tmdbcleanarchitecture.ui.main.movie_details.movie_trailers.MovieTrailerItemViewModel" />
+    </data>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="175dp"
+    android:layout_height="125dp"
+    android:layout_margin="5dp"
+    android:onClick="@{()->movieTrailerViewModel.onItemClick()}"
+    android:backgroundTint="@color/dRVBackground">
+
+    <ImageView
+        android:id="@+id/movie_trailer_thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:trailerImage="@{movieTrailerViewModel.movieTrailerThumbnails}"/>
+
+    <ProgressBar
+        android:id="@+id/movie_trailer_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_gravity="center_vertical|center_horizontal"/>
+
+</androidx.cardview.widget.CardView>
+
+</layout>

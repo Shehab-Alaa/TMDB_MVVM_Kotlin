@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
@@ -11,10 +13,14 @@ import com.example.tmdbcleanarchitecture.databinding.ItemEmptyMovieBinding
 import com.example.tmdbcleanarchitecture.databinding.ItemMovieBinding
 import com.example.tmdbcleanarchitecture.ui.base.BaseEmptyItemListener
 import com.example.tmdbcleanarchitecture.ui.base.BaseItemListener
-import com.example.tmdbcleanarchitecture.ui.base.BasePagedListAdapter
 import com.example.tmdbcleanarchitecture.ui.base.BaseViewHolder
 
-class MoviesAdapter(val itemListener: MoviesAdapterListener) : BasePagedListAdapter() {
+class MoviesAdapter(val itemListener: MoviesAdapterListener) : PagedListAdapter<Movie,MoviesAdapter.MoviesViewHolder>(MovieDiffCallback()) {
+
+
+    override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
+        holder.onBind(position)
+    }
 
    /* override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder{
         return when(viewType){
@@ -32,7 +38,7 @@ class MoviesAdapter(val itemListener: MoviesAdapterListener) : BasePagedListAdap
        }
     }*/
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         return MoviesViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context) , R.layout.item_movie , parent , false
@@ -69,7 +75,7 @@ class MoviesAdapter(val itemListener: MoviesAdapterListener) : BasePagedListAdap
 
     }
 
-    inner class EmptyMovieViewHolder(var emptyItemMovieBinding: ItemEmptyMovieBinding) : BaseViewHolder(emptyItemMovieBinding.root ) , MovieEmptyItemViewModel.MovieEmptyItemListener {
+    inner class EmptyMovieViewHolder(private var emptyItemMovieBinding: ItemEmptyMovieBinding) : BaseViewHolder(emptyItemMovieBinding.root ) , MovieEmptyItemViewModel.MovieEmptyItemListener {
 
         override fun onBind(position: Int) {
             emptyItemMovieBinding.emptyItemViewModel = MovieEmptyItemViewModel(this)
@@ -80,6 +86,16 @@ class MoviesAdapter(val itemListener: MoviesAdapterListener) : BasePagedListAdap
             itemListener.onRetryClick()
         }
 
+    }
+
+    class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem == newItem
+        }
     }
 
 }

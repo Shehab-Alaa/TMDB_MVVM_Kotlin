@@ -27,7 +27,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val toolbar: Toolbar = findViewById(R.id.toolbarX)
         setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = getViewDataBinding().drawerLayout

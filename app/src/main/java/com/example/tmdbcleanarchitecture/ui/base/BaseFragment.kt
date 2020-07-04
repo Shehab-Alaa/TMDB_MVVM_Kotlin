@@ -15,6 +15,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     private lateinit var viewDataBinding: T
     private lateinit var viewModel: V
     private lateinit var navController: NavController
+    private lateinit var mRootView : View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +26,8 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        return viewDataBinding.root
+        mRootView = viewDataBinding.root
+        return mRootView
     }
 
     abstract val layoutId: Int
@@ -50,6 +52,10 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
     fun getViewModel() : V {
         return viewModel
+    }
+
+    fun gerMRootView() : View{
+        return mRootView
     }
 
 }

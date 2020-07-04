@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/mobile_navigation"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
     app:startDestination="@id/nowPlayingMoviesItem">
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.example.tmdbcleanarchitecture.ui.main.movie_details.MovieDetailsFragment"
+        android:label="MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details">
+        <action
+            android:id="@+id/action_movieDetailsFragment_self"
+            app:destination="@id/movieDetailsFragment" />
+        <argument
+            android:name="selectedMovie"
+            app:argType="com.example.tmdbcleanarchitecture.data.model.db.Movie" />
+    </fragment>
 
     <fragment
         android:id="@+id/nowPlayingMoviesItem"
         android:name="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesFragment"
         android:label="Now Playing Movies"
         tools:layout="@layout/fragment_movies">
+        <action
+            android:id="@+id/action_MoviesFragment_To_MovieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
         <argument
             android:name="categoryType"
             app:argType="string"
@@ -20,6 +34,9 @@
         android:name="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesFragment"
         android:label="Popular Movies"
         tools:layout="@layout/fragment_movies">
+        <action
+            android:id="@+id/action_MoviesFragment_To_MovieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
         <argument
             android:name="categoryType"
             app:argType="string"
@@ -30,6 +47,9 @@
         android:name="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesFragment"
         android:label="Top Rated Movies"
         tools:layout="@layout/fragment_movies">
+        <action
+            android:id="@+id/action_MoviesFragment_To_MovieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
         <argument
             android:name="categoryType"
             app:argType="string"
@@ -40,6 +60,9 @@
         android:name="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesFragment"
         android:label="Upcoming Movies"
         tools:layout="@layout/fragment_movies">
+        <action
+            android:id="@+id/action_MoviesFragment_To_MovieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
         <argument
             android:name="categoryType"
             app:argType="string"
@@ -49,6 +72,9 @@
         android:id="@+id/favoriteMoviesItem"
         android:name="com.example.tmdbcleanarchitecture.ui.main.movie.MoviesFragment"
         android:label="Favorite Movies">
+        <action
+            android:id="@+id/action_MoviesFragment_To_MovieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
         <argument
             android:name="categoryType"
             app:argType="string"

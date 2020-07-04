@@ -2,18 +2,16 @@ package com.example.tmdbcleanarchitecture.ui.main.movie
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
-import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
 import com.example.tmdbcleanarchitecture.databinding.FragmentMoviesBinding
+import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.ui.base.BaseFragment
 import com.example.tmdbcleanarchitecture.utils.GridSpacingItemDecorationUtils
 import org.koin.android.ext.android.inject
@@ -81,10 +79,15 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , 
         get() = BR.moviesViewModel
 
     override fun onItemClick(view: View?, item: Movie) {
-        TODO("Not yet implemented")
+        val action = MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(item)
+        getNavController().navigate(action)
     }
 
     override fun onRetryClick() {
-        TODO("Not yet implemented")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 }
