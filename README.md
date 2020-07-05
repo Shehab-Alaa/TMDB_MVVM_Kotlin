@@ -4,8 +4,9 @@ movie details , movie trailers , movie reviews and adding movies to you watchlis
 Implementing MVVM architecture using Koins, Coroutines, Retrofit, LiveData, RoomDatabase, DataBinding, Paging and Navigation Component
 Applying Clean Code using OOP , SOLID Priciples , Helper Classes and Repository Pattern.
 
-![106729046_3006370986126405_1714284474270312165_n](https://user-images.githubusercontent.com/39988066/86522128-596e7780-be59-11ea-80a7-af1c476c485d.png)
-![106741673_347881202875505_5191264685880403385_n](https://user-images.githubusercontent.com/39988066/86522137-7b67fa00-be59-11ea-9cc7-4f00e46de287.png)
+![106988977_610373243194778_4263052984704696679_n](https://user-images.githubusercontent.com/39988066/86523277-4912c880-be6a-11ea-88aa-a71e23fb435b.png)
+![107376205_269156881038035_8726728892523833839_n](https://user-images.githubusercontent.com/39988066/86523282-5f208900-be6a-11ea-8183-46d508cdd068.png)
+![107103839_274880973946082_1657028415147045183_n](https://user-images.githubusercontent.com/39988066/86523285-69428780-be6a-11ea-81ab-83b33b908c89.png)
 
 ## The app has following packages:
 1. data: It contains all the data accessing and manipulating components.
