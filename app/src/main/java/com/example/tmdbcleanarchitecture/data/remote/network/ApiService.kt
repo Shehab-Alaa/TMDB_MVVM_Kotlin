@@ -1,7 +1,7 @@
 package com.example.tmdbcleanarchitecture.data.remote.network
 
 
-import com.example.tmdbcleanarchitecture.data.model.MovieDetails
+import com.example.tmdbcleanarchitecture.data.model.details.MovieDetails
 import com.example.tmdbcleanarchitecture.data.model.api.DataResponse
 import com.example.tmdbcleanarchitecture.data.model.api.MovieReviewResponse
 import com.example.tmdbcleanarchitecture.data.model.api.MovieVideosResponse

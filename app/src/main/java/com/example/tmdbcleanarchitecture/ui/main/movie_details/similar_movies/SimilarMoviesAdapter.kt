@@ -30,7 +30,7 @@ class SimilarMoviesAdapter(moviesItems : MutableList<Movie>, private val moviesA
         }
     }
 
-    interface MoviesAdapterListener : BaseItemListener<Movie?>, BaseEmptyItemListener
+    interface MoviesAdapterListener : BaseItemListener<Movie>, BaseEmptyItemListener
 
     inner class MoviesViewHolder(private val itemMovieBinding: ItemMovieBinding) : BaseViewHolder(itemMovieBinding.root), MovieItemViewModel.MovieItemClickListener{
 

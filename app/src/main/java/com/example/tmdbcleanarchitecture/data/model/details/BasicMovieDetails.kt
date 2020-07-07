@@ -1,8 +1,7 @@
-package com.example.tmdbcleanarchitecture.data.model
+package com.example.tmdbcleanarchitecture.data.model.details
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
 data class BasicMovieDetails  (
     @SerializedName("id")

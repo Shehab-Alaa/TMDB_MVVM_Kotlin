@@ -1,7 +1,7 @@
 package com.example.tmdbcleanarchitecture.ui.main.movie_details.movie_trailers
 
 import androidx.databinding.ObservableField
-import com.example.tmdbcleanarchitecture.data.model.MovieTrailer
+import com.example.tmdbcleanarchitecture.data.model.details.MovieTrailer
 
 class MovieTrailerItemViewModel(private val movieTrailer: MovieTrailer, private val movieTrailerClickListener: MovieTrailerClickListener) {
 

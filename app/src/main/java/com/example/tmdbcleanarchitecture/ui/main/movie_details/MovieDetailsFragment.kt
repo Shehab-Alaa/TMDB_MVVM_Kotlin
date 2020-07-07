@@ -1,12 +1,16 @@
 package com.example.tmdbcleanarchitecture.ui.main.movie_details
 
-import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,7 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
-import com.example.tmdbcleanarchitecture.data.model.MovieTrailer
+import com.example.tmdbcleanarchitecture.data.DataManager
+import com.example.tmdbcleanarchitecture.data.model.details.MovieTrailer
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
 import com.example.tmdbcleanarchitecture.databinding.FragmentMovieDetailsBinding
 import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
@@ -23,32 +28,20 @@ import com.example.tmdbcleanarchitecture.ui.base.BaseFragment
 import com.example.tmdbcleanarchitecture.ui.main.movie_details.movie_reviews.MovieReviewsAdapter
 import com.example.tmdbcleanarchitecture.ui.main.movie_details.movie_trailers.MovieTrailersAdapter
 import com.example.tmdbcleanarchitecture.ui.main.movie_details.similar_movies.SimilarMoviesAdapter
+import com.example.tmdbcleanarchitecture.utils.AppConstants
 import org.koin.android.ext.android.inject
+
 
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDetailsViewModel>(),
     SimilarMoviesAdapter.MoviesAdapterListener, MovieTrailersAdapter.MovieTrailersAdapterListener {
 
-    private val viewModelsFactory : ViewModelsFactory by inject()
-    private lateinit var movie : Movie
     private val similarMoviesAdapter = SimilarMoviesAdapter(mutableListOf() , this)
     private val movieReviewsAdapter = MovieReviewsAdapter(mutableListOf())
     private val movieTrailersAdapter  = MovieTrailersAdapter(mutableListOf() , this)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val args = MovieDetailsFragmentArgs.fromBundle(requireArguments())
-        movie = args.selectedMovie
-        getViewModel().movie = movie
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         initToolbar()
-        // Check For Favorite View Model
-        getViewDataBinding().collapsingToolbar.isTitleEnabled = true
-        getViewDataBinding().collapsingToolbar.title = movie.title
-
         return gerMRootView()
     }
 
@@ -60,8 +53,13 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
         initRecyclerView(getViewDataBinding().rvMovieReviews , movieReviewsAdapter , RecyclerView.VERTICAL)
     }
 
+    override fun initViewModelsFactory(): ViewModelsFactory {
+        val args = MovieDetailsFragmentArgs.fromBundle(requireArguments())
+        return ViewModelsFactory(this , bundleOf(AppConstants.SELECTED_MOVIE to args.selectedMovie))
+    }
+
     override fun initViewModel(): MovieDetailsViewModel {
-        return ViewModelProvider(this,viewModelsFactory).get(MovieDetailsViewModel::class.java)
+        return ViewModelProvider(this , getViewModelFactory()).get(MovieDetailsViewModel::class.java)
     }
 
     override val layoutId: Int
@@ -75,20 +73,33 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
         recyclerView.adapter = adapter
     }
 
-    override fun onItemClick(view: View?, item: Movie?) {
-        TODO("Not yet implemented")
+    override fun onItemClick(view: View?, item: Movie) {
+        val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(item)
+        getNavController().navigate(action)
     }
 
     override fun onRetryClick() {
-        TODO("Not yet implemented")
+        getViewModel().fetchSimilarMovies()
     }
 
     override fun onMovieTrailersRetry() {
-        TODO("Not yet implemented")
+        getViewModel().fetchMovieTrailers()
     }
 
     override fun onMovieTrailerClick(movieTrailer: MovieTrailer?) {
-        TODO("Not yet implemented")
+        openYoutubeApp(movieTrailer?.key)
+    }
+
+    private fun openYoutubeApp(videoId: String?) {
+        val appIntent =
+            Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.YOUTUBE_APP_LINK + videoId))
+        val webIntent =
+            Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.YOUTUBE_WEB_LINK + videoId))
+        try {
+            context?.startActivity(appIntent)
+        } catch (ex: ActivityNotFoundException) {
+            context?.startActivity(webIntent)
+        }
     }
 
     private fun initToolbar() {
@@ -101,7 +112,6 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
         if (navController != null) {
             if (appBarConfiguration != null) {
                 NavigationUI.setupWithNavController(layout, toolbar, navController, appBarConfiguration)
-                Log.i("Here" , "Collapsing Toolbar")
             }
         }
     }

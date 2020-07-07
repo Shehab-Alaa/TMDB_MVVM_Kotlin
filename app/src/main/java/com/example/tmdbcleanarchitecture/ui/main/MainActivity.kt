@@ -10,8 +10,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelProvider
 import com.example.tmdbcleanarchitecture.R
+import com.example.tmdbcleanarchitecture.data.DataManager
 import com.example.tmdbcleanarchitecture.databinding.ActivityMainBinding
 import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.ui.base.BaseActivity
@@ -19,7 +22,6 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
-    private val viewModelsFactory : ViewModelsFactory by inject()
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +58,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
        return R.layout.activity_main
     }
 
+    override fun initViewModelsFactory(): ViewModelsFactory {
+        return ViewModelsFactory(this , bundleOf())
+    }
+
     override fun initViewModel(): MainViewModel {
-        return ViewModelProvider(this,viewModelsFactory).get(MainViewModel::class.java)
+        return ViewModelProvider(this , getViewModelFactory()).get(MainViewModel::class.java)
     }
 }

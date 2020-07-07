@@ -1,31 +1,95 @@
 package com.example.tmdbcleanarchitecture.ui.main.movie_details
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.example.tmdbcleanarchitecture.data.DataManager
-import com.example.tmdbcleanarchitecture.data.model.MovieDetails
-import com.example.tmdbcleanarchitecture.data.model.MovieReview
-import com.example.tmdbcleanarchitecture.data.model.MovieTrailer
+import com.example.tmdbcleanarchitecture.data.model.details.MovieDetails
+import com.example.tmdbcleanarchitecture.data.model.details.MovieReview
+import com.example.tmdbcleanarchitecture.data.model.details.MovieTrailer
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
 import com.example.tmdbcleanarchitecture.ui.base.BaseViewModel
+import kotlinx.coroutines.launch
+import com.example.tmdbcleanarchitecture.data.model.Result
+import com.example.tmdbcleanarchitecture.data.model.api.DataResponse
+import com.example.tmdbcleanarchitecture.data.model.api.MovieReviewResponse
+import com.example.tmdbcleanarchitecture.data.model.api.MovieVideosResponse
+import com.example.tmdbcleanarchitecture.utils.AppConstants
+import java.lang.Appendable
 
-class MovieDetailsViewModel(dataManager: DataManager) : BaseViewModel(dataManager) {
+class MovieDetailsViewModel(dataManager: DataManager,saveStateHandle : SavedStateHandle) : BaseViewModel(dataManager,saveStateHandle) {
 
     lateinit var movie : Movie
+    private val movieDetails : MutableLiveData<MovieDetails> = MutableLiveData()
+    private val similarMoviesList : MutableLiveData<List<Movie>> = MutableLiveData()
+    private val movieReviewsList : MutableLiveData<List<MovieReview>> = MutableLiveData()
+    private val movieTrailersList : MutableLiveData<List<MovieTrailer>> = MutableLiveData()
 
-    val movieDetails : MutableLiveData<MovieDetails> by lazy {
-        getDataManager().getApiRepository().fetchLiveMovieDetailsData(movie.id)
+    fun fetchMovieDetails(){
+        viewModelScope.launch {
+            when(val result = getDataManager().getApiRepository().fetchLiveMovieDetailsData(movie.id)){
+                is Result.Success<MovieDetails> -> {
+                    movieDetails.value = result.data
+                }
+                is Result.Error ->{
+                    Log.i("Here" , "MovieDetails Failed")
+                }
+            }
+        }
     }
 
-    val similarMoviesList : MutableLiveData<List<Movie>> by lazy{
-        getDataManager().getApiRepository().fetchLiveSimilarMoviesList(movie.id)
+    fun fetchSimilarMovies(){
+        viewModelScope.launch {
+            when(val result = getDataManager().getApiRepository().fetchLiveSimilarMoviesList(movie.id)){
+                is Result.Success<DataResponse> -> {
+                    similarMoviesList.value = result.data.movieList
+                }
+                is Result.Error ->{
+                    Log.i("Here" , "SimilarMovies Failed")
+                }
+            }
+        }
     }
 
-    val movieReviewsList : MutableLiveData<List<MovieReview>> by lazy {
-        getDataManager().getApiRepository().fetchLiveMovieReviewsList(movie.id)
+    fun fetchMovieReviews(){
+        viewModelScope.launch {
+            when(val result = getDataManager().getApiRepository().fetchLiveMovieReviewsList(movie.id)){
+                is Result.Success<MovieReviewResponse> -> {
+                    movieReviewsList.value = result.data.movieReviews
+                }
+                is Result.Error ->{
+                    Log.i("Here" , "MovieReviews Failed")
+                }
+            }
+        }
     }
 
-    val movieTrailersList : MutableLiveData<List<MovieTrailer>> by lazy {
-        getDataManager().getApiRepository().fetchLiveMovieTrailersList(movie.id)
+    fun fetchMovieTrailers(){
+        viewModelScope.launch {
+            when(val result = getDataManager().getApiRepository().fetchLiveMovieTrailersList(movie.id)){
+                is Result.Success<MovieVideosResponse> -> {
+                    movieTrailersList.value = result.data.movieTrailers
+                }
+                is Result.Error ->{
+                    Log.i("Here" , "MovieTrailers Failed")
+                }
+            }
+        }
+    }
+
+    val movieDetailsLiveData : LiveData<MovieDetails> get() = movieDetails
+    val similarMoviesLiveData : LiveData<List<Movie>> get() = similarMoviesList
+    val movieReviewsLiveData : LiveData<List<MovieReview>> get() = movieReviewsList
+    val movieTrailersLiveData : LiveData<List<MovieTrailer>> get() = movieTrailersList
+
+    init {
+        movie = getSaveStateHandle().get(AppConstants.SELECTED_MOVIE)!!
+        fetchMovieDetails()
+        fetchSimilarMovies()
+        fetchMovieTrailers()
+        fetchMovieReviews()
     }
 
     val isFavoriteMovie : MutableLiveData<Boolean> by lazy {

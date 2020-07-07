@@ -5,7 +5,7 @@
     <data>
         <variable
             name="movieReview"
-            type="com.example.tmdbcleanarchitecture.data.model.MovieReview" />
+            type="com.example.tmdbcleanarchitecture.data.model.details.MovieReview" />
     </data>
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"

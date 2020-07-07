@@ -2,7 +2,7 @@ package com.example.tmdbcleanarchitecture.ui.main.movie_details.movie_trailers
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.example.tmdbcleanarchitecture.data.model.MovieTrailer
+import com.example.tmdbcleanarchitecture.data.model.details.MovieTrailer
 import com.example.tmdbcleanarchitecture.databinding.ItemEmptyMovieTrailerBinding
 import com.example.tmdbcleanarchitecture.databinding.ItemMovieTrailerBinding
 import com.example.tmdbcleanarchitecture.ui.base.BaseRecyclerViewAdapter
@@ -11,7 +11,7 @@ import com.example.tmdbcleanarchitecture.ui.main.movie_details.movie_trailers.Mo
 import com.example.tmdbcleanarchitecture.ui.main.movie_details.movie_trailers.MovieTrailerItemViewModel.MovieTrailerClickListener
 import com.example.tmdbcleanarchitecture.utils.AppConstants
 
-class MovieTrailersAdapter(items: MutableList<MovieTrailer> , private val movieTrailersAdapterListener: MovieTrailersAdapterListener) : BaseRecyclerViewAdapter<MovieTrailer>(items) {
+class MovieTrailersAdapter(items: MutableList<MovieTrailer>, private val movieTrailersAdapterListener: MovieTrailersAdapterListener) : BaseRecyclerViewAdapter<MovieTrailer>(items) {
 
 
     override fun getItemViewType(position: Int): Int {

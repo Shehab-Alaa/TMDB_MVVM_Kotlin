@@ -5,11 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
+import com.example.tmdbcleanarchitecture.data.DataManager
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
 import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.databinding.FragmentFavoriteMoviesBinding
@@ -21,7 +26,6 @@ import org.koin.android.ext.android.inject
 class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding, FavoriteMoviesViewModel>(),
     FavoriteMoviesAdapter.FavoritesAdapterListener {
 
-    private val viewModelsFactory : ViewModelsFactory by inject()
     private val favoriteMoviesAdapter = FavoriteMoviesAdapter(mutableListOf() , this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,8 +59,12 @@ class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding, Favor
         getViewDataBinding().favoriteMoviesRv.adapter = favoriteMoviesAdapter
     }
 
+    override fun initViewModelsFactory(): ViewModelsFactory {
+        return ViewModelsFactory(this , bundleOf())
+    }
+
     override fun initViewModel(): FavoriteMoviesViewModel {
-        return ViewModelProvider(this,viewModelsFactory).get(FavoriteMoviesViewModel::class.java)
+        return ViewModelProvider(this , getViewModelFactory()).get(FavoriteMoviesViewModel::class.java)
     }
 
     override val layoutId: Int
@@ -67,6 +75,11 @@ class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding, Favor
     override fun onItemClick(view: View?, item: Movie) {
         val action = FavoriteMoviesFragmentDirections.actionFavoriteMoviesFragmentToMovieDetailsFragment(item)
         getNavController().navigate(action)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 
 }

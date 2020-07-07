@@ -1,17 +1,17 @@
 package com.example.tmdbcleanarchitecture.data.model.api
 
-import com.example.tmdbcleanarchitecture.data.model.MovieReview
+import com.example.tmdbcleanarchitecture.data.model.details.MovieReview
 import com.google.gson.annotations.SerializedName
 
 data class MovieReviewResponse(
     @SerializedName("id")
-    val id: Int ,
+    val id: Int,
     @SerializedName("page")
-    val page: Int ,
+    val page: Int,
     @SerializedName("results")
-    val movieReviews: List<MovieReview> ,
+    val movieReviews: List<MovieReview>,
     @SerializedName("total_pages")
-    val totalPages: Int ,
+    val totalPages: Int,
     @SerializedName("total_results")
     val totalResults: Int
 )

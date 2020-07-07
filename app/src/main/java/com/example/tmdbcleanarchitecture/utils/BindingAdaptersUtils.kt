@@ -4,12 +4,11 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tmdbcleanarchitecture.R
-import com.example.tmdbcleanarchitecture.data.model.Category
+import com.example.tmdbcleanarchitecture.data.model.details.Category
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
 import com.example.tmdbcleanarchitecture.data.remote.network.ApiClient
 import com.example.tmdbcleanarchitecture.data.remote.network.YoutubeClient

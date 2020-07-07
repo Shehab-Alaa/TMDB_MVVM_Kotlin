@@ -26,9 +26,10 @@
             android:id="@+id/movies_rv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adapterList="@{moviesViewModel.moviesPagedList}"
             tools:listitem="@layout/item_movie"
-            android:scrollbars="vertical">
+            android:adapterList="@{moviesViewModel.moviesPagedList}"
+            android:scrollbars="vertical"
+            android:scrollbarThumbVertical="@drawable/list_scrollbar">
         </androidx.recyclerview.widget.RecyclerView>
 
         <androidx.core.widget.ContentLoadingProgressBar

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.tmdbcleanarchitecture.R
-import com.example.tmdbcleanarchitecture.data.model.MovieReview
+import com.example.tmdbcleanarchitecture.data.model.details.MovieReview
 import com.example.tmdbcleanarchitecture.databinding.ItemMovieReviewBinding
 import com.example.tmdbcleanarchitecture.ui.base.BaseRecyclerViewAdapter
 import com.example.tmdbcleanarchitecture.ui.base.BaseViewHolder

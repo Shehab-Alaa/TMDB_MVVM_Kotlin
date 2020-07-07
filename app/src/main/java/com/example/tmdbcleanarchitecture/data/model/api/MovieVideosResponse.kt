@@ -1,6 +1,6 @@
 package com.example.tmdbcleanarchitecture.data.model.api
 
-import com.example.tmdbcleanarchitecture.data.model.MovieTrailer
+import com.example.tmdbcleanarchitecture.data.model.details.MovieTrailer
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.util.*

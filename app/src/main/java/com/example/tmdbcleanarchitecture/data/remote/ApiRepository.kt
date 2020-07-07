@@ -1,19 +1,17 @@
 package com.example.tmdbcleanarchitecture.data.remote
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.example.tmdbcleanarchitecture.data.model.MovieDetails
-import com.example.tmdbcleanarchitecture.data.model.MovieReview
-import com.example.tmdbcleanarchitecture.data.model.MovieTrailer
+import com.example.tmdbcleanarchitecture.data.model.Result
+import com.example.tmdbcleanarchitecture.data.model.api.DataResponse
+import com.example.tmdbcleanarchitecture.data.model.api.MovieReviewResponse
+import com.example.tmdbcleanarchitecture.data.model.api.MovieVideosResponse
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
+import com.example.tmdbcleanarchitecture.data.model.details.MovieDetails
 import com.example.tmdbcleanarchitecture.data.remote.network.ApiClient
 import com.example.tmdbcleanarchitecture.data.remote.network.ApiService
-import com.example.tmdbcleanarchitecture.data.remote.network.YoutubeClient
 import com.example.tmdbcleanarchitecture.ui.main.movie.MovieDataSourceFactory
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -33,35 +31,40 @@ class ApiRepository : KoinComponent{
         return moviePagedList
     }
 
-    fun fetchLiveMovieDetailsData(movieID:Int) : MutableLiveData<MovieDetails>{
-        val movieDetails : MutableLiveData<MovieDetails> = MutableLiveData()
-        GlobalScope.launch {
-            movieDetails.postValue(apiService.getMovieDetails(movieID , ApiClient.API_KEY , ApiClient.LANGUAGE))
+    suspend fun fetchLiveMovieDetailsData(movieID : Int) : Result<MovieDetails> {
+        return try {
+            val movieDetails = apiService.getMovieDetails(movieID , ApiClient.API_KEY , ApiClient.LANGUAGE)
+            Result.Success(movieDetails)
+        }catch (exception : Exception){
+            Result.Error(exception.localizedMessage)
         }
-        return movieDetails
     }
 
-    fun fetchLiveSimilarMoviesList(movieID: Int) : MutableLiveData<List<Movie>>{
-        val similarMoviesList : MutableLiveData<List<Movie>> = MutableLiveData()
-        GlobalScope.launch {
-            similarMoviesList.postValue(apiService.getSimilarMovies(movieID , ApiClient.API_KEY , ApiClient.LANGUAGE , ApiClient.FIRST_PAGE).movieList)
+    suspend fun fetchLiveSimilarMoviesList(movieID: Int) : Result<DataResponse>{
+        return try {
+            val dataResponse = apiService.getSimilarMovies(movieID , ApiClient.API_KEY , ApiClient.LANGUAGE , ApiClient.FIRST_PAGE)
+            Result.Success(dataResponse)
+        }catch (e : Exception){
+            Result.Error(e.localizedMessage)
         }
-        return similarMoviesList
     }
 
-    fun fetchLiveMovieReviewsList(movieID: Int) : MutableLiveData<List<MovieReview>>{
-        val movieReviewsList : MutableLiveData<List<MovieReview>> = MutableLiveData()
-        GlobalScope.launch {
-            movieReviewsList.postValue(apiService.getMovieReviews(movieID,ApiClient.API_KEY , ApiClient.LANGUAGE , ApiClient.FIRST_PAGE).movieReviews)
-        }
-        return movieReviewsList
+    suspend fun fetchLiveMovieReviewsList(movieID: Int) : Result<MovieReviewResponse>{
+       return try {
+           val movieReviewResponse = apiService.getMovieReviews(movieID,ApiClient.API_KEY , ApiClient.LANGUAGE , ApiClient.FIRST_PAGE)
+           Result.Success(movieReviewResponse)
+       }catch (e : Exception){
+           Result.Error(e.localizedMessage)
+       }
     }
 
-    fun fetchLiveMovieTrailersList(movieID: Int) : MutableLiveData<List<MovieTrailer>>{
-        val movieTrailersList : MutableLiveData<List<MovieTrailer>> = MutableLiveData()
-        GlobalScope.launch {
-            movieTrailersList.postValue(apiService.getMovieTrailers(movieID,ApiClient.API_KEY, ApiClient.LANGUAGE).movieTrailers)
+    suspend fun fetchLiveMovieTrailersList(movieID: Int) : Result<MovieVideosResponse>{
+        return try {
+            val movieVideosResponse = apiService.getMovieTrailers(movieID,ApiClient.API_KEY, ApiClient.LANGUAGE)
+            Result.Success(movieVideosResponse)
+        }catch (e : Exception){
+            Result.Error(e.localizedMessage)
         }
-        return movieTrailersList
     }
+
 }

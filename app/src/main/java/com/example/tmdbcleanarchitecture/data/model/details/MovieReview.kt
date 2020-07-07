@@ -1,4 +1,4 @@
-package com.example.tmdbcleanarchitecture.data.model
+package com.example.tmdbcleanarchitecture.data.model.details
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

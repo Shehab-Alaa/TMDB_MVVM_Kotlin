@@ -2,33 +2,33 @@ package com.example.tmdbcleanarchitecture.ui.main.movie
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
+import com.example.tmdbcleanarchitecture.data.DataManager
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
 import com.example.tmdbcleanarchitecture.databinding.FragmentMoviesBinding
 import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.ui.base.BaseFragment
+import com.example.tmdbcleanarchitecture.utils.AppConstants
 import com.example.tmdbcleanarchitecture.utils.GridSpacingItemDecorationUtils
 import org.koin.android.ext.android.inject
 
 
 class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , MoviesAdapter.MoviesAdapterListener {
 
-    private val viewModelsFactory : ViewModelsFactory by inject()
-    private lateinit var category : String
     private lateinit var moviesAdapter: MoviesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val args : MoviesFragmentArgs = MoviesFragmentArgs.fromBundle(requireArguments())
-        category = args.categoryType
-        getViewModel().category = category
 
         moviesAdapter = MoviesAdapter(this)
     }
@@ -41,7 +41,6 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , 
         getViewDataBinding().btnRef.setOnClickListener {
             moviesAdapter.notifyDataSetChanged()
         }
-
     }
 
     private fun checkScreenOrientation() {
@@ -69,8 +68,13 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , 
         getViewDataBinding().moviesRv.adapter = moviesAdapter
     }
 
+    override fun initViewModelsFactory(): ViewModelsFactory {
+        val args : MoviesFragmentArgs = MoviesFragmentArgs.fromBundle(requireArguments())
+        return ViewModelsFactory(this , bundleOf(AppConstants.SELECTED_CATEGORY to args.categoryType))
+    }
+
     override fun initViewModel(): MoviesViewModel {
-        return ViewModelProvider(this,viewModelsFactory).get(MoviesViewModel::class.java)
+        return ViewModelProvider(this , getViewModelFactory()).get(MoviesViewModel::class.java)
     }
 
     override val layoutId: Int
@@ -90,4 +94,5 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , 
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
+
 }
