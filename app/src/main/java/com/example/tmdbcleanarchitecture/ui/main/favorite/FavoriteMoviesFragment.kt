@@ -19,14 +19,17 @@ import com.example.tmdbcleanarchitecture.data.model.db.Movie
 import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.databinding.FragmentFavoriteMoviesBinding
 import com.example.tmdbcleanarchitecture.ui.base.BaseFragment
+import com.example.tmdbcleanarchitecture.utils.AppConstants
 import com.example.tmdbcleanarchitecture.utils.GridSpacingItemDecorationUtils
 import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 
 class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding, FavoriteMoviesViewModel>(),
     FavoriteMoviesAdapter.FavoritesAdapterListener {
 
     private val favoriteMoviesAdapter = FavoriteMoviesAdapter(mutableListOf() , this)
+    private val viewModelsFactory : ViewModelsFactory by inject { parametersOf(this)}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,12 +62,11 @@ class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding, Favor
         getViewDataBinding().favoriteMoviesRv.adapter = favoriteMoviesAdapter
     }
 
-    override fun initViewModelsFactory(): ViewModelsFactory {
-        return ViewModelsFactory(this , bundleOf())
-    }
 
     override fun initViewModel(): FavoriteMoviesViewModel {
-        return ViewModelProvider(this , getViewModelFactory()).get(FavoriteMoviesViewModel::class.java)
+        return viewModelsFactory.create(AppConstants.VIEW_MODEL_KEY,FavoriteMoviesViewModel::class.java,
+            SavedStateHandle(mapOf())
+        )
     }
 
     override val layoutId: Int

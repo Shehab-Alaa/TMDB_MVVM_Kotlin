@@ -11,12 +11,9 @@ abstract class BaseActivity<T : ViewDataBinding , V : BaseViewModel> : AppCompat
 
     private lateinit var mViewDataBinding: T
     private lateinit var mViewModel: V
-    private lateinit var mViewModelsFactory: ViewModelsFactory
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewModelsFactory = initViewModelsFactory()
         mViewModel = initViewModel()
         performDataBinding()
     }
@@ -28,7 +25,6 @@ abstract class BaseActivity<T : ViewDataBinding , V : BaseViewModel> : AppCompat
     }
 
     abstract fun getLayoutId(): Int
-    abstract fun initViewModelsFactory() : ViewModelsFactory
     abstract fun initViewModel(): V
 
 
@@ -38,10 +34,6 @@ abstract class BaseActivity<T : ViewDataBinding , V : BaseViewModel> : AppCompat
 
     fun getViewDataBinding(): T {
         return mViewDataBinding
-    }
-
-    fun getViewModelFactory() : ViewModelsFactory{
-        return mViewModelsFactory
     }
 
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.core.os.bundleOf
 import androidx.room.Room
 import androidx.savedstate.SavedStateRegistry
+import androidx.savedstate.SavedStateRegistryOwner
 import com.example.tmdbcleanarchitecture.data.DataManager
 import com.example.tmdbcleanarchitecture.data.local.db.AppDatabase
 import com.example.tmdbcleanarchitecture.data.remote.network.ApiClient
@@ -22,8 +23,13 @@ val appModule = module {
     single { get<Retrofit>().create(ApiService::class.java) }
     single { provideRetrofit() }
 
+    single { (owner : SavedStateRegistryOwner) -> provideViewModelFactory(owner)}
+
     single { provideAppDatabase(provideAppContext(get()) , provideDatabaseName())}
 }
+
+private fun provideViewModelFactory(owner: SavedStateRegistryOwner) = ViewModelsFactory(owner ,
+    bundleOf())
 
 private fun provideRetrofit() = Retrofit.Builder()
     .baseUrl(ApiClient.BASE_URL)

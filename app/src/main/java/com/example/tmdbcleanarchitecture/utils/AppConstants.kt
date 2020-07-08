@@ -2,6 +2,8 @@ package com.example.tmdbcleanarchitecture.utils
 
 object AppConstants {
 
+    const val VIEW_MODEL_KEY = "CreateViewModel"
+
     const val NOW_PLAYING = "now_playing"
     const val POPULAR = "popular"
     const val TOP_RATED = "top_rated"

@@ -10,13 +10,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 
 abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment() {
 
     private lateinit var viewDataBinding: T
     private lateinit var viewModel: V
-    private lateinit var viewModelsFactory: ViewModelsFactory
     private lateinit var navController: NavController
     private lateinit var mRootView : View
     private lateinit var mContext : Context
@@ -28,11 +26,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModelsFactory = initViewModelsFactory()
         viewModel = initViewModel()
     }
 
-    abstract fun initViewModelsFactory() : ViewModelsFactory
     abstract fun initViewModel(): V
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -67,10 +63,6 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
     fun gerMRootView() : View{
         return mRootView
-    }
-
-    fun getViewModelFactory() : ViewModelsFactory{
-        return viewModelsFactory
     }
 
     fun getMContext() : Context{

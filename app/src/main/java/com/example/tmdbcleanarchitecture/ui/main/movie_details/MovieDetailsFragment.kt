@@ -30,11 +30,13 @@ import com.example.tmdbcleanarchitecture.ui.main.movie_details.movie_trailers.Mo
 import com.example.tmdbcleanarchitecture.ui.main.movie_details.similar_movies.SimilarMoviesAdapter
 import com.example.tmdbcleanarchitecture.utils.AppConstants
 import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDetailsViewModel>(),
     SimilarMoviesAdapter.MoviesAdapterListener, MovieTrailersAdapter.MovieTrailersAdapterListener {
 
+    private val viewModelsFactory : ViewModelsFactory by inject { parametersOf(this) }
     private val similarMoviesAdapter = SimilarMoviesAdapter(mutableListOf() , this)
     private val movieReviewsAdapter = MovieReviewsAdapter(mutableListOf())
     private val movieTrailersAdapter  = MovieTrailersAdapter(mutableListOf() , this)
@@ -53,13 +55,11 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
         initRecyclerView(getViewDataBinding().rvMovieReviews , movieReviewsAdapter , RecyclerView.VERTICAL)
     }
 
-    override fun initViewModelsFactory(): ViewModelsFactory {
-        val args = MovieDetailsFragmentArgs.fromBundle(requireArguments())
-        return ViewModelsFactory(this , bundleOf(AppConstants.SELECTED_MOVIE to args.selectedMovie))
-    }
-
     override fun initViewModel(): MovieDetailsViewModel {
-        return ViewModelProvider(this , getViewModelFactory()).get(MovieDetailsViewModel::class.java)
+        val args = MovieDetailsFragmentArgs.fromBundle(requireArguments())
+        return viewModelsFactory.create(AppConstants.VIEW_MODEL_KEY , MovieDetailsViewModel::class.java , SavedStateHandle(
+            mapOf(AppConstants.SELECTED_MOVIE to args.selectedMovie))
+        )
     }
 
     override val layoutId: Int

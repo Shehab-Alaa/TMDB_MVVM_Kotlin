@@ -18,11 +18,14 @@ import com.example.tmdbcleanarchitecture.data.DataManager
 import com.example.tmdbcleanarchitecture.databinding.ActivityMainBinding
 import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.ui.base.BaseActivity
+import com.example.tmdbcleanarchitecture.utils.AppConstants
 import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private val viewModelsFactory : ViewModelsFactory by inject { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,11 +61,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
        return R.layout.activity_main
     }
 
-    override fun initViewModelsFactory(): ViewModelsFactory {
-        return ViewModelsFactory(this , bundleOf())
-    }
-
     override fun initViewModel(): MainViewModel {
-        return ViewModelProvider(this , getViewModelFactory()).get(MainViewModel::class.java)
+        return viewModelsFactory.create(AppConstants.VIEW_MODEL_KEY , MainViewModel::class.java , SavedStateHandle(mapOf()))
     }
 }

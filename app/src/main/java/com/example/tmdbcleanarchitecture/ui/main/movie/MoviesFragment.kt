@@ -22,10 +22,12 @@ import com.example.tmdbcleanarchitecture.utils.AppConstants
 import com.example.tmdbcleanarchitecture.utils.GridLayoutManagerWrapper
 import com.example.tmdbcleanarchitecture.utils.GridSpacingItemDecorationUtils
 import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 
 class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , MoviesAdapter.MoviesAdapterListener {
 
+    private val viewModelsFactory : ViewModelsFactory by inject { parametersOf(this) }
     private lateinit var moviesAdapter: MoviesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,13 +73,11 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , 
         getViewDataBinding().moviesRv.adapter = moviesAdapter
     }
 
-    override fun initViewModelsFactory(): ViewModelsFactory {
-        val args : MoviesFragmentArgs = MoviesFragmentArgs.fromBundle(requireArguments())
-        return ViewModelsFactory(this , bundleOf(AppConstants.SELECTED_CATEGORY to args.categoryType))
-    }
-
     override fun initViewModel(): MoviesViewModel {
-        return ViewModelProvider(this , getViewModelFactory()).get(MoviesViewModel::class.java)
+        val args : MoviesFragmentArgs = MoviesFragmentArgs.fromBundle(requireArguments())
+        return viewModelsFactory.create(AppConstants.VIEW_MODEL_KEY , MoviesViewModel::class.java , SavedStateHandle(
+            mapOf(AppConstants.SELECTED_CATEGORY to args.categoryType))
+        )
     }
 
     override val layoutId: Int
