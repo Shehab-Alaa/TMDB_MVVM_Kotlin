@@ -15,22 +15,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btn_ref"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Refresh">
-        </Button>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/main_swiperefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movies_rv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:listitem="@layout/item_movie"
-            android:adapterList="@{moviesViewModel.moviesPagedList}"
+            android:adapterList="@{moviesViewModel.moviesPagedListLiveData}"
             android:scrollbars="vertical"
             android:scrollbarThumbVertical="@drawable/list_scrollbar">
         </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/progress_bar"

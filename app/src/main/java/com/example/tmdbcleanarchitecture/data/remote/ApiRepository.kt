@@ -31,6 +31,7 @@ class ApiRepository : KoinComponent{
         return moviePagedList
     }
 
+
     suspend fun fetchLiveMovieDetailsData(movieID : Int) : Result<MovieDetails> {
         return try {
             val movieDetails = apiService.getMovieDetails(movieID , ApiClient.API_KEY , ApiClient.LANGUAGE)

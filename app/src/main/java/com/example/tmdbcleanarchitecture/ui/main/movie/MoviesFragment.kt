@@ -19,6 +19,7 @@ import com.example.tmdbcleanarchitecture.databinding.FragmentMoviesBinding
 import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.ui.base.BaseFragment
 import com.example.tmdbcleanarchitecture.utils.AppConstants
+import com.example.tmdbcleanarchitecture.utils.GridLayoutManagerWrapper
 import com.example.tmdbcleanarchitecture.utils.GridSpacingItemDecorationUtils
 import org.koin.android.ext.android.inject
 
@@ -38,9 +39,11 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , 
 
         checkScreenOrientation()
 
-        getViewDataBinding().btnRef.setOnClickListener {
+        getViewDataBinding().mainSwiperefresh.setOnRefreshListener {
             moviesAdapter.notifyDataSetChanged()
+            getViewDataBinding().mainSwiperefresh.isRefreshing = false
         }
+
     }
 
     private fun checkScreenOrientation() {
@@ -55,7 +58,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , 
     }
 
     private fun initMoviesRecyclerView(spanCount: Int, spacing: Int) {
-        val gridLayoutManager = GridLayoutManager(context, spanCount)
+        val gridLayoutManager = GridLayoutManagerWrapper(getMContext(), spanCount)
         getViewDataBinding().moviesRv.layoutManager = gridLayoutManager
         getViewDataBinding().moviesRv.setHasFixedSize(true)
         // set Animation to all children (items) of this Layout

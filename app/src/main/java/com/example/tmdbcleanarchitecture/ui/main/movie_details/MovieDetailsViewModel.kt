@@ -21,7 +21,7 @@ import java.lang.Appendable
 
 class MovieDetailsViewModel(dataManager: DataManager,saveStateHandle : SavedStateHandle) : BaseViewModel(dataManager,saveStateHandle) {
 
-    lateinit var movie : Movie
+    var movie : Movie = getSaveStateHandle().get(AppConstants.SELECTED_MOVIE)!!
     private val movieDetails : MutableLiveData<MovieDetails> = MutableLiveData()
     private val similarMoviesList : MutableLiveData<List<Movie>> = MutableLiveData()
     private val movieReviewsList : MutableLiveData<List<MovieReview>> = MutableLiveData()
@@ -85,7 +85,6 @@ class MovieDetailsViewModel(dataManager: DataManager,saveStateHandle : SavedStat
     val movieTrailersLiveData : LiveData<List<MovieTrailer>> get() = movieTrailersList
 
     init {
-        movie = getSaveStateHandle().get(AppConstants.SELECTED_MOVIE)!!
         fetchMovieDetails()
         fetchSimilarMovies()
         fetchMovieTrailers()

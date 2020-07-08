@@ -4,8 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
@@ -13,51 +11,24 @@ import com.example.tmdbcleanarchitecture.databinding.ItemEmptyMovieBinding
 import com.example.tmdbcleanarchitecture.databinding.ItemMovieBinding
 import com.example.tmdbcleanarchitecture.ui.base.BaseEmptyItemListener
 import com.example.tmdbcleanarchitecture.ui.base.BaseItemListener
+import com.example.tmdbcleanarchitecture.ui.base.BasePagedListAdapter
 import com.example.tmdbcleanarchitecture.ui.base.BaseViewHolder
+import com.example.tmdbcleanarchitecture.utils.AppConstants
 
-class MoviesAdapter(val itemListener: MoviesAdapterListener) : PagedListAdapter<Movie,MoviesAdapter.MoviesViewHolder>(MovieDiffCallback()) {
+class MoviesAdapter(val itemListener: MoviesAdapterListener) : BasePagedListAdapter() {
 
-
-    override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        holder.onBind(position)
-    }
-
-   /* override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder{
+   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder{
         return when(viewType){
-           AppConstants.VIEW_TYPE_NORMAL -> {
-               Log.i("Here" , "Create Normal View Holder")
-               MoviesViewHolder(
-               DataBindingUtil.inflate(
-               LayoutInflater.from(parent.context) , R.layout.item_movie , parent , false
-           ))}
-           else -> {
-               Log.i("Here" , "Create Empty View Holder")
-               EmptyMovieViewHolder(DataBindingUtil.inflate(
-               LayoutInflater.from(parent.context) , R.layout.item_empty_movie , parent , false
-           ))}
+           AppConstants.VIEW_TYPE_NORMAL -> { MoviesViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context) , R.layout.item_movie , parent , false))}
+           else -> { EmptyMovieViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context) , R.layout.item_empty_movie , parent , false))}
        }
-    }*/
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
-        return MoviesViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context) , R.layout.item_movie , parent , false
-            ))
     }
 
-
-   /* override fun getItemViewType(position: Int): Int {
-        return if (currentList != null && !currentList!!.isEmpty()) {
-            AppConstants.VIEW_TYPE_NORMAL
-        } else {
-            AppConstants.VIEW_TYPE_EMPTY
-        }
-    }*/
-
-
-    interface MoviesAdapterListener : BaseItemListener<Movie> , BaseEmptyItemListener {
-
+    override fun getItemViewType(position: Int): Int {
+        return if (currentList != null && currentList!!.isNotEmpty()) AppConstants.VIEW_TYPE_NORMAL else AppConstants.VIEW_TYPE_EMPTY
     }
+
+    interface MoviesAdapterListener : BaseItemListener<Movie> , BaseEmptyItemListener
 
     inner class MoviesViewHolder(private var itemMovieBinding: ItemMovieBinding) : BaseViewHolder(itemMovieBinding.root) , MovieItemViewModel.MovieItemClickListener{
 
@@ -85,17 +56,7 @@ class MoviesAdapter(val itemListener: MoviesAdapterListener) : PagedListAdapter<
         override fun onRetryClick() {
             itemListener.onRetryClick()
         }
-
     }
 
-    class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
-        }
-    }
 
 }

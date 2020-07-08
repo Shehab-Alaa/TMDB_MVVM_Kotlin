@@ -1,5 +1,6 @@
 package com.example.tmdbcleanarchitecture.ui.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,12 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     private lateinit var viewModelsFactory: ViewModelsFactory
     private lateinit var navController: NavController
     private lateinit var mRootView : View
+    private lateinit var mContext : Context
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,5 +71,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
     fun getViewModelFactory() : ViewModelsFactory{
         return viewModelsFactory
+    }
+
+    fun getMContext() : Context{
+        return mContext
     }
 }

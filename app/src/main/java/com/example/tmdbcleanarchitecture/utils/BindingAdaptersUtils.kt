@@ -1,9 +1,11 @@
 package com.example.tmdbcleanarchitecture.utils
 
+import android.util.Log
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -89,10 +91,10 @@ object BindingAdaptersUtils {
     @Suppress("UNCHECKED_CAST")
     @JvmStatic
     @BindingAdapter("android:adapterList")
-    fun setRecyclerViewData(recyclerView: RecyclerView , moviesList:PagedList<Movie>?){
+    fun setRecyclerViewData(recyclerView: RecyclerView , moviesList:LiveData<PagedList<Movie>>?){
         moviesList?.let {
             (recyclerView.adapter as? MoviesAdapter)?.apply {
-                submitList(moviesList)
+                submitList(moviesList.value)
             }
         }
     }
