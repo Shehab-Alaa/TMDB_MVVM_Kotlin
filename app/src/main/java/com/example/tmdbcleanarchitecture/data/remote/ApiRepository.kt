@@ -15,13 +15,13 @@ import com.example.tmdbcleanarchitecture.ui.main.movie.MovieDataSourceFactory
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class ApiRepository : KoinComponent{
+class ApiRepository : ApiDataSource , KoinComponent{
 
     private val apiService: ApiService by inject()
     private lateinit var moviePagedList: LiveData<PagedList<Movie>>
     private lateinit var moviesDataSourceFactory: MovieDataSourceFactory
 
-    fun fetchLiveMoviesPagedList (category: String) : LiveData<PagedList<Movie>> {
+    override fun fetchLiveMoviesPagedList (category: String) : LiveData<PagedList<Movie>> {
         moviesDataSourceFactory = MovieDataSourceFactory(category)
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
@@ -32,7 +32,7 @@ class ApiRepository : KoinComponent{
     }
 
 
-    suspend fun fetchLiveMovieDetailsData(movieID : Int) : Result<MovieDetails> {
+    override suspend fun fetchLiveMovieDetailsData(movieID : Int) : Result<MovieDetails> {
         return try {
             val movieDetails = apiService.getMovieDetails(movieID , ApiClient.API_KEY , ApiClient.LANGUAGE)
             Result.Success(movieDetails)
@@ -41,7 +41,7 @@ class ApiRepository : KoinComponent{
         }
     }
 
-    suspend fun fetchLiveSimilarMoviesList(movieID: Int) : Result<DataResponse>{
+    override suspend fun fetchLiveSimilarMoviesList(movieID: Int) : Result<DataResponse>{
         return try {
             val dataResponse = apiService.getSimilarMovies(movieID , ApiClient.API_KEY , ApiClient.LANGUAGE , ApiClient.FIRST_PAGE)
             Result.Success(dataResponse)
@@ -50,7 +50,7 @@ class ApiRepository : KoinComponent{
         }
     }
 
-    suspend fun fetchLiveMovieReviewsList(movieID: Int) : Result<MovieReviewResponse>{
+    override suspend fun fetchLiveMovieReviewsList(movieID: Int) : Result<MovieReviewResponse>{
        return try {
            val movieReviewResponse = apiService.getMovieReviews(movieID,ApiClient.API_KEY , ApiClient.LANGUAGE , ApiClient.FIRST_PAGE)
            Result.Success(movieReviewResponse)
@@ -59,7 +59,7 @@ class ApiRepository : KoinComponent{
        }
     }
 
-    suspend fun fetchLiveMovieTrailersList(movieID: Int) : Result<MovieVideosResponse>{
+    override suspend fun fetchLiveMovieTrailersList(movieID: Int) : Result<MovieVideosResponse>{
         return try {
             val movieVideosResponse = apiService.getMovieTrailers(movieID,ApiClient.API_KEY, ApiClient.LANGUAGE)
             Result.Success(movieVideosResponse)

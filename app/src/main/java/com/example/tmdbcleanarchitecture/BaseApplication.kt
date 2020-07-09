@@ -2,6 +2,7 @@ package com.example.tmdbcleanarchitecture
 
 import android.app.Application
 import com.example.tmdbcleanarchitecture.di.module.appModule
+import com.example.tmdbcleanarchitecture.di.module.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -15,7 +16,7 @@ class BaseApplication : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@BaseApplication)
-            modules(listOf(appModule))
+            modules(listOf(appModule , viewModelModule))
         }
     }
 }

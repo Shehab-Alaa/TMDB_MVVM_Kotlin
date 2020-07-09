@@ -8,23 +8,23 @@ import io.reactivex.schedulers.Schedulers
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class DatabaseRepository : KoinComponent{
+class DatabaseRepository : DbDataSource ,  KoinComponent{
 
     private val appDatabase : AppDatabase by inject()
 
-    fun getLiveFavoriteMovies() : LiveData<MutableList<Movie>>{
+    override fun getLiveFavoriteMovies() : LiveData<MutableList<Movie>>{
         return appDatabase.moviesDAO.loadAll()
     }
 
-    fun addFavoriteMovie(movie: Movie){
+    override fun addFavoriteMovie(movie: Movie){
         appDatabase.moviesDAO.insert(movie)
     }
 
-    fun deleteFavoriteMovie(movieID : Int){
+    override fun deleteFavoriteMovie(movieID : Int){
         appDatabase.moviesDAO.delete(movieID)
     }
 
-    fun checkFavoriteMovie(movieID: Int) : MutableLiveData<Boolean>{
+    override fun checkFavoriteMovie(movieID: Int) : MutableLiveData<Boolean>{
         val isFavorite : MutableLiveData<Boolean> = MutableLiveData()
         appDatabase.moviesDAO.isExist(movieID).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe ({
@@ -38,7 +38,7 @@ class DatabaseRepository : KoinComponent{
         return isFavorite
     }
 
-    fun getRowsCount() : Int{
+    override fun getRowsCount() : Int{
         return appDatabase.moviesDAO.countRows()
     }
 }
