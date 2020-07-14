@@ -18,9 +18,12 @@ class MovieDataSource(val category: String) : PageKeyedDataSource<Int, Movie>() 
 
     private val apiService : ApiService by inject()
     private val page = ApiClient.FIRST_PAGE
+    private val coroutineExceptionHandler = CoroutineExceptionHandler{_ , throwable ->
+        Log.i("Here" , "Response Handler Issue: " + throwable.localizedMessage)
+    }
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
-        GlobalScope.launch {
+        GlobalScope.launch (coroutineExceptionHandler){
             val moviesList =  apiService.getMovies(category ,
                 ApiClient.API_KEY , ApiClient.LANGUAGE ,
                 page).movieList
@@ -29,7 +32,7 @@ class MovieDataSource(val category: String) : PageKeyedDataSource<Int, Movie>() 
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-        GlobalScope.launch {
+        GlobalScope.launch (coroutineExceptionHandler){
            val dataResponse = apiService.getMovies(category, ApiClient.API_KEY , ApiClient.LANGUAGE ,
                 params.key)
            if (dataResponse.totalPages >= params.key){

@@ -6,18 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.tmdbcleanarchitecture.data.DataManager
-import com.example.tmdbcleanarchitecture.data.model.details.MovieDetails
-import com.example.tmdbcleanarchitecture.data.model.details.MovieReview
-import com.example.tmdbcleanarchitecture.data.model.details.MovieTrailer
-import com.example.tmdbcleanarchitecture.data.model.db.Movie
-import com.example.tmdbcleanarchitecture.ui.base.BaseViewModel
-import kotlinx.coroutines.launch
 import com.example.tmdbcleanarchitecture.data.model.Result
 import com.example.tmdbcleanarchitecture.data.model.api.DataResponse
 import com.example.tmdbcleanarchitecture.data.model.api.MovieReviewResponse
 import com.example.tmdbcleanarchitecture.data.model.api.MovieVideosResponse
+import com.example.tmdbcleanarchitecture.data.model.db.Movie
+import com.example.tmdbcleanarchitecture.data.model.details.MovieDetails
+import com.example.tmdbcleanarchitecture.data.model.details.MovieReview
+import com.example.tmdbcleanarchitecture.data.model.details.MovieTrailer
+import com.example.tmdbcleanarchitecture.ui.base.BaseViewModel
 import com.example.tmdbcleanarchitecture.utils.AppConstants
-import java.lang.Appendable
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.launch
 
 class MovieDetailsViewModel(dataManager: DataManager,saveStateHandle : SavedStateHandle) : BaseViewModel(dataManager,saveStateHandle) {
 
@@ -26,9 +26,12 @@ class MovieDetailsViewModel(dataManager: DataManager,saveStateHandle : SavedStat
     private val similarMoviesList : MutableLiveData<List<Movie>> = MutableLiveData()
     private val movieReviewsList : MutableLiveData<List<MovieReview>> = MutableLiveData()
     private val movieTrailersList : MutableLiveData<List<MovieTrailer>> = MutableLiveData()
+    private val coroutineExceptionHandler = CoroutineExceptionHandler{_ , throwable ->
+        Log.i("Here" , "Response Handler Issue: " + throwable.localizedMessage)
+    }
 
     fun fetchMovieDetails(){
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineExceptionHandler) {
             when(val result = getDataManager().getApiRepository().fetchLiveMovieDetailsData(movie.id)){
                 is Result.Success<MovieDetails> -> {
                     movieDetails.value = result.data
@@ -41,7 +44,7 @@ class MovieDetailsViewModel(dataManager: DataManager,saveStateHandle : SavedStat
     }
 
     fun fetchSimilarMovies(){
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineExceptionHandler) {
             when(val result = getDataManager().getApiRepository().fetchLiveSimilarMoviesList(movie.id)){
                 is Result.Success<DataResponse> -> {
                     similarMoviesList.value = result.data.movieList
@@ -54,7 +57,7 @@ class MovieDetailsViewModel(dataManager: DataManager,saveStateHandle : SavedStat
     }
 
     fun fetchMovieReviews(){
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineExceptionHandler) {
             when(val result = getDataManager().getApiRepository().fetchLiveMovieReviewsList(movie.id)){
                 is Result.Success<MovieReviewResponse> -> {
                     movieReviewsList.value = result.data.movieReviews
@@ -67,7 +70,7 @@ class MovieDetailsViewModel(dataManager: DataManager,saveStateHandle : SavedStat
     }
 
     fun fetchMovieTrailers(){
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineExceptionHandler) {
             when(val result = getDataManager().getApiRepository().fetchLiveMovieTrailersList(movie.id)){
                 is Result.Success<MovieVideosResponse> -> {
                     movieTrailersList.value = result.data.movieTrailers
