@@ -3,12 +3,14 @@ package com.example.tmdbcleanarchitecture.ui.main.movie_details
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.Navigation
@@ -16,6 +18,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
@@ -45,10 +48,11 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
         return gerMRootView()
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       // setLayoutAnimation()
+        setLayoutAnimation()
 
         initRecyclerView(getViewDataBinding().rvSimilarMovies , similarMoviesAdapter , RecyclerView.HORIZONTAL)
         initRecyclerView(getViewDataBinding().rvMovieTrailers , movieTrailersAdapter , RecyclerView.HORIZONTAL)
@@ -73,7 +77,7 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
         recyclerView.adapter = adapter
     }
 
-    override fun onItemClick(view: View?, item: Movie) {
+    override fun onItemClick(view: View, item: Movie) {
         val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(item)
         getNavController().navigate(action)
     }
@@ -116,7 +120,10 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun setLayoutAnimation() {
+        getViewDataBinding().moviePoster.transitionName = getViewModel().movie.posterPath
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         val rightAnimationController: LayoutAnimationController = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_slide_right)
         getViewDataBinding().movieDetailsLayout.layoutAnimation = rightAnimationController
         val bottomAnimationController: LayoutAnimationController = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_from_bottom)

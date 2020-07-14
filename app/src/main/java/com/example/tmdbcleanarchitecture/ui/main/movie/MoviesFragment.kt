@@ -1,11 +1,14 @@
 package com.example.tmdbcleanarchitecture.ui.main.movie
 
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
@@ -80,9 +83,12 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , 
     override val bindingVariable: Int
         get() = BR.moviesViewModel
 
-    override fun onItemClick(view: View?, item: Movie) {
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onItemClick(view: View, item: Movie) {
+        view.transitionName = item.posterPath
+        val extras = FragmentNavigatorExtras(view to item.posterPath.toString())
         val action = MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(item)
-        getNavController().navigate(action)
+        getNavController().navigate(action,extras)
     }
 
     override fun onRetryClick() {

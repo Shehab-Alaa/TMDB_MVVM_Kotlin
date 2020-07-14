@@ -43,7 +43,7 @@ class FavoriteMoviesAdapter(items: MutableList<Movie>, private val favoritesAdap
             itemFavoriteMovieBinding.executePendingBindings()
         }
 
-        override fun onItemClick(view: View?, item: Movie) {
+        override fun onItemClick(view: View, item: Movie) {
             favoritesAdapterListener.onItemClick(view, item)
         }
 

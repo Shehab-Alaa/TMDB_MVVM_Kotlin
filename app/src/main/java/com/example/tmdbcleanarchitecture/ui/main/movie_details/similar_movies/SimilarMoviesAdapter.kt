@@ -40,7 +40,7 @@ class SimilarMoviesAdapter(moviesItems : MutableList<Movie>, private val moviesA
             itemMovieBinding.executePendingBindings()
         }
 
-        override fun onItemClick(view: View?, item: Movie) {
+        override fun onItemClick(view: View, item: Movie) {
             moviesAdapterListener.onItemClick(view, item)
         }
     }

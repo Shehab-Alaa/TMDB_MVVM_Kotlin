@@ -1,16 +1,19 @@
 package com.example.tmdbcleanarchitecture.ui.main.favorite
 
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
@@ -74,9 +77,12 @@ class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding, Favor
     override val bindingVariable: Int
         get() = BR.favoriteMoviesViewModel
 
-    override fun onItemClick(view: View?, item: Movie) {
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onItemClick(view: View, item: Movie) {
+        view.transitionName = item.posterPath
+        val extras = FragmentNavigatorExtras(view to item.posterPath.toString())
         val action = FavoriteMoviesFragmentDirections.actionFavoriteMoviesFragmentToMovieDetailsFragment(item)
-        getNavController().navigate(action)
+        getNavController().navigate(action,extras)
     }
 
     override fun onResume() {

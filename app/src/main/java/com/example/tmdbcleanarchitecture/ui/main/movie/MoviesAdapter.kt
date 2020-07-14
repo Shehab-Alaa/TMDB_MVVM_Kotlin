@@ -41,7 +41,7 @@ class MoviesAdapter(val itemListener: MoviesAdapterListener) : BasePagedListAdap
             itemMovieBinding.executePendingBindings()
         }
 
-        override fun onItemClick(view: View?, item: Movie) {
+        override fun onItemClick(view: View, item: Movie) {
             itemListener.onItemClick(view,item)
         }
 

@@ -8,8 +8,8 @@ import com.example.tmdbcleanarchitecture.ui.base.BaseItemListener
 class MovieItemViewModel(private val movie: Movie,
                          private val movieItemClickListener: MovieItemClickListener) {
 
-    val moviePoster: ObservableField<String?> = ObservableField<String?>(movie.posterPath)
-    val movieTitle: ObservableField<String?> = ObservableField<String?>(movie.title)
+    val moviePoster: ObservableField<String> = ObservableField<String>(movie.posterPath.toString())
+    val movieTitle: ObservableField<String> = ObservableField<String>(movie.title.toString())
 
     fun onItemClick(view: View) {
         movieItemClickListener.onItemClick(view, movie)
