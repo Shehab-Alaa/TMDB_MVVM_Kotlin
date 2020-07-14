@@ -6,6 +6,7 @@ Applying Clean Code using OOP , SOLID Priciples , Helper Classes and Repository 
 
 ![106988977_610373243194778_4263052984704696679_n](https://user-images.githubusercontent.com/39988066/86523277-4912c880-be6a-11ea-88aa-a71e23fb435b.png)
 ![107376205_269156881038035_8726728892523833839_n](https://user-images.githubusercontent.com/39988066/86523282-5f208900-be6a-11ea-8183-46d508cdd068.png)
+![PicsArt_07-13-10 26 24](https://user-images.githubusercontent.com/39988066/87366888-08a5ff80-c57a-11ea-8100-692ffffcaea7.png)
 ![107103839_274880973946082_1657028415147045183_n](https://user-images.githubusercontent.com/39988066/86523285-69428780-be6a-11ea-81ab-83b33b908c89.png)
 
 ## The app has following packages:
