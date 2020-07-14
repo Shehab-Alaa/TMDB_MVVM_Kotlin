@@ -15,11 +15,13 @@ class MoviesViewModel(dataManager: DataManager , saveStateHandle : SavedStateHan
     private var moviesPagesList : LiveData<PagedList<Movie>> = MutableLiveData()
 
     init {
+        setIsLoading(true)
         fetchMoviesPagedList()
     }
 
-    private fun fetchMoviesPagedList(){
+    fun fetchMoviesPagedList(){
         moviesPagesList = getDataManager().getApiRepository().fetchLiveMoviesPagedList(category)
+        setIsLoading(false)
     }
 
     val moviesPagedListLiveData : LiveData<PagedList<Movie>> get() = moviesPagesList

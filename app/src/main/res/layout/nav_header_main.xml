@@ -5,7 +5,7 @@
     android:layout_height="176dp"
     android:gravity="bottom"
     android:padding="16dp"
-    android:background="@color/dHeader">
+    android:background="?attr/navHeaderBackground">
 
 
     <ImageView
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:textColor="#ccd8de"
+        android:textColor="?attr/textColor"
         android:fontFamily="monospace"
         android:text="@string/the_moviest"
         android:textSize="20sp"

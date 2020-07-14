@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+   <data>
+       <variable
+           name="settingsViewModel"
+           type="com.example.tmdbcleanarchitecture.ui.other.setting.SettingsViewModel" />
+   </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.other.setting.SettingsFragment"
+    android:background="?attr/backgroundColor">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?attr/cardViewBackground"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_theme"
+            android:textColor="?attr/textColor"
+            android:textSize="20sp"
+            android:padding="5dp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/dark_radioBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="@{settingsViewModel.darkThemeLiveData}"
+                android:layoutDirection="rtl"
+                android:layout_gravity="start"
+                android:textAlignment="textStart"
+                android:text="@string/dark"
+                android:textColor="?attr/textColor"
+                android:onClick="@{()->settingsViewModel.onDarkThemeBtnClick()}"/>
+
+            <RadioButton
+                android:id="@+id/light_radioBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="@{settingsViewModel.lightThemeLiveData}"
+                android:layoutDirection="rtl"
+                android:layout_gravity="start"
+                android:textAlignment="textStart"
+                android:text="@string/light"
+                android:textColor="?attr/textColor"
+                android:onClick="@{()->settingsViewModel.onLightThemeBtnClick()}"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

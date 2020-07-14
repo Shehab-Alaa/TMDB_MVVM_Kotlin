@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal|center_vertical"
-        android:background="@color/dBackground"
+        android:background="?attr/backgroundColor"
         android:orientation="vertical">
 
         <ImageView
@@ -22,7 +22,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:background="@mipmap/app_icon"/>
+            android:src="@mipmap/app_icon"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:textColor="@color/dText"
+            android:textColor="?attr/textColor"
             android:text="@string/empty_screen" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
-            android:textColor="@color/dText"
+            android:textColor="?attr/textColor"
             android:text="@string/please_retry" />
 
         <Button
@@ -50,8 +50,8 @@
             android:onClick="@{() -> emptyItemViewModel.onRetryClick()}"
             android:text="@string/retry"
             android:textAllCaps="false"
-            android:background="@color/dToolbar"
-            android:textColor="@color/dText"
+            android:background="?attr/buttonBackground"
+            android:textColor="?attr/textColor"
             android:textSize="20sp" />
     </LinearLayout>
 

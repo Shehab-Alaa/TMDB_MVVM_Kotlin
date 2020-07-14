@@ -3,11 +3,47 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/dColorPrimary</item>
+        <item name="colorPrimaryDark">@color/dColorPrimaryDark</item>
+        <item name="colorAccent">@color/dColorAccent</item>
         <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
-        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/dColorAccent</item>
+
+        <item name="navHeaderBackground">@color/dHeader</item>
+        <item name="navDrawerBackground">@color/dNavBackground</item>
+        <item name="backgroundColor">@color/dBackground</item>
+        <item name="textColor">@color/dText</item>
+        <item name="cardViewBackground">@color/dCardViewBackground</item>
+        <item name="buttonBackground">@color/dBtnBackground</item>
+        <item name="titleTextColor">@color/dTitleText</item>
+        <item name="appBarColor">@color/appBarBackground</item>
+        <item name="recyclerViewBackground">@color/dRVBackground</item>
+        <item name="fadeBackground">@color/dFadeBackground</item>
+        <item name="fadeTitleColor">@color/dFadeTitleColor</item>
+        <item name="appBarTitleColor">@color/DppBarTitleColor</item>
+    </style>
+
+
+    <style name="LightAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/LColorPrimary</item>
+        <item name="colorPrimaryDark">@color/LColorPrimaryDark</item>
+        <item name="colorAccent">@color/LColorAccent</item>
+        <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
+        <item name="colorControlHighlight">@color/LColorAccent</item>
+
+        <item name="navHeaderBackground">@color/LHeader</item>
+        <item name="navDrawerBackground">@color/LNavBackground</item>
+        <item name="backgroundColor">@color/LBackground</item>
+        <item name="textColor">@color/LText</item>
+        <item name="cardViewBackground">@color/LCardViewBackground</item>
+        <item name="buttonBackground">@color/LBtnBackground</item>
+        <item name="titleTextColor">@color/LTitleText</item>
+        <item name="appBarColor">@color/LappBarBackground</item>
+        <item name="recyclerViewBackground">@color/LRVBackground</item>
+        <item name="fadeBackground">@color/LFadeBackground</item>
+        <item name="fadeTitleColor">@color/LFadeTitleColor</item>
+        <item name="appBarTitleColor">@color/LppBarTitleColor</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

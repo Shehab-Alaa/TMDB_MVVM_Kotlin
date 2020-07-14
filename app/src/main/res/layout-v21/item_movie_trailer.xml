@@ -14,7 +14,7 @@
     android:layout_height="125dp"
     android:layout_margin="5dp"
     android:onClick="@{()->movieTrailerViewModel.onItemClick()}"
-    android:backgroundTint="@color/dRVBackground">
+    android:backgroundTint="?attr/recyclerViewBackground">
 
     <ImageView
         android:id="@+id/movie_trailer_thumbnail"

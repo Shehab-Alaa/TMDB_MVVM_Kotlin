@@ -1,5 +1,6 @@
 package com.example.tmdbcleanarchitecture.ui.main
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.navigation.NavigationView
@@ -24,10 +25,12 @@ import org.koin.core.parameter.parametersOf
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
+    private val sharedPreferences : SharedPreferences by inject()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val viewModelsFactory : ViewModelsFactory by inject { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setApplicationTheme()
         super.onCreate(savedInstanceState)
         val toolbar: Toolbar = findViewById(R.id.toolbarX)
         setSupportActionBar(toolbar)
@@ -39,7 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.nowPlayingMoviesItem , R.id.popularMoviesItem , R.id.topRatedMoviesItem ,
-            R.id.upcomingMoviesItem , R.id.favoriteMoviesItem
+            R.id.upcomingMoviesItem , R.id.favoriteMoviesItem , R.id.settingsItem
         ), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -54,6 +57,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun setApplicationTheme(){
+        when (sharedPreferences.getString(AppConstants.SELECTED_THEME , AppConstants.DEFAULT_THEME)){
+            AppConstants.DARK_THEME -> setTheme(R.style.AppTheme)
+            AppConstants.LIGHT_THEME -> setTheme(R.style.LightAppTheme)
+            else -> {
+                // Hit Shared Preference For First Time (set dark theme as default)
+                setTheme(R.style.AppTheme)
+                with(receiver = sharedPreferences.edit()){
+                    putString(AppConstants.SELECTED_THEME , AppConstants.DARK_THEME)
+                    apply()
+                }
+            }
+        }
     }
 
     override fun getLayoutId(): Int {

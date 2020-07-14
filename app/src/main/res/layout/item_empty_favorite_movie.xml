@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="@color/dBackground"
+        android:background="?attr/backgroundColor"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
@@ -30,7 +30,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="@string/empty_screen"
-            android:textColor="@color/dText"/>
+            android:textColor="?attr/textColor"/>
     </LinearLayout>
 
 </layout>

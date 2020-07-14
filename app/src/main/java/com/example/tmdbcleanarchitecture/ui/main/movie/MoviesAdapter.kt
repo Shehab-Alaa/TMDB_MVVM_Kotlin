@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
 import com.example.tmdbcleanarchitecture.data.model.db.Movie

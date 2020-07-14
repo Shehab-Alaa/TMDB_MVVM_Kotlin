@@ -7,11 +7,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.SavedStateViewModelFactory
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -19,9 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
-import com.example.tmdbcleanarchitecture.data.DataManager
-import com.example.tmdbcleanarchitecture.data.model.details.MovieTrailer
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
+import com.example.tmdbcleanarchitecture.data.model.details.MovieTrailer
 import com.example.tmdbcleanarchitecture.databinding.FragmentMovieDetailsBinding
 import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.ui.base.BaseFragment
@@ -49,6 +47,8 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+       // setLayoutAnimation()
 
         initRecyclerView(getViewDataBinding().rvSimilarMovies , similarMoviesAdapter , RecyclerView.HORIZONTAL)
         initRecyclerView(getViewDataBinding().rvMovieTrailers , movieTrailersAdapter , RecyclerView.HORIZONTAL)
@@ -114,6 +114,13 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
                 NavigationUI.setupWithNavController(layout, toolbar, navController, appBarConfiguration)
             }
         }
+    }
+
+    private fun setLayoutAnimation() {
+        val rightAnimationController: LayoutAnimationController = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_slide_right)
+        getViewDataBinding().movieDetailsLayout.layoutAnimation = rightAnimationController
+        val bottomAnimationController: LayoutAnimationController = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_from_bottom)
+        getViewDataBinding().movieOverviewLayout.layoutAnimation = bottomAnimationController
     }
 
     override fun onResume() {

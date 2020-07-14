@@ -9,6 +9,7 @@ import com.example.tmdbcleanarchitecture.ui.main.MainViewModel
 import com.example.tmdbcleanarchitecture.ui.main.favorite.FavoriteMoviesViewModel
 import com.example.tmdbcleanarchitecture.ui.main.movie.MoviesViewModel
 import com.example.tmdbcleanarchitecture.ui.main.movie_details.MovieDetailsViewModel
+import com.example.tmdbcleanarchitecture.ui.other.setting.SettingsViewModel
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -24,6 +25,7 @@ class ViewModelsFactory (owner: SavedStateRegistryOwner, defaultArgs: Bundle) : 
             modelClass.isAssignableFrom(MoviesViewModel::class.java) -> MoviesViewModel(dataManager , handle) as T
             modelClass.isAssignableFrom(FavoriteMoviesViewModel::class.java) -> FavoriteMoviesViewModel(dataManager , handle) as T
             modelClass.isAssignableFrom(MovieDetailsViewModel::class.java) -> MovieDetailsViewModel(dataManager , handle) as T
+            modelClass.isAssignableFrom(SettingsViewModel::class.java) -> SettingsViewModel(dataManager , handle) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

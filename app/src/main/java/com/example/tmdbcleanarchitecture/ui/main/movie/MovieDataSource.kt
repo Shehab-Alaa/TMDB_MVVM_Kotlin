@@ -1,6 +1,7 @@
 package com.example.tmdbcleanarchitecture.ui.main.movie
 
 import android.util.Log
+import android.widget.Toast
 import androidx.paging.PageKeyedDataSource
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
 import com.example.tmdbcleanarchitecture.data.remote.network.ApiClient
@@ -29,9 +30,13 @@ class MovieDataSource(val category: String) : PageKeyedDataSource<Int, Movie>() 
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         GlobalScope.launch {
-           val moviesList = apiService.getMovies(category, ApiClient.API_KEY , ApiClient.LANGUAGE ,
-                params.key).movieList
-           callback.onResult(moviesList , params.key + 1)
+           val dataResponse = apiService.getMovies(category, ApiClient.API_KEY , ApiClient.LANGUAGE ,
+                params.key)
+           if (dataResponse.totalPages >= params.key){
+              callback.onResult(dataResponse.movieList , params.key + 1)
+           }else{
+               Log.i("Here" , "End of Pages")
+           }
         }
     }
 

@@ -1,6 +1,14 @@
 package com.example.tmdbcleanarchitecture.utils
 
+import com.example.tmdbcleanarchitecture.BuildConfig
+
 object AppConstants {
+
+    const val PREF_NAME = BuildConfig.APPLICATION_ID + "_pref"
+    const val SELECTED_THEME = "selected_theme"
+    const val DARK_THEME = "dark_theme"
+    const val LIGHT_THEME = "light_theme"
+    const val DEFAULT_THEME = "default_theme"
 
     const val VIEW_MODEL_KEY = "CreateViewModel"
 

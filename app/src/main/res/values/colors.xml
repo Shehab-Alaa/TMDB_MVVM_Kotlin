@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#5e6c75</color>
-    <color name="colorPrimaryDark">#003048</color>
-    <color name="colorAccent">#107db2</color>
+    <color name="dColorPrimary">#5e6c75</color>
+    <color name="dColorPrimaryDark">#003048</color>
+    <color name="dColorAccent">#107db2</color>
     <color name="dBackground">#3c454b</color>
     <color name="dHeader">#003048</color>
     <color name="dToolbar">#5e6c75</color>
     <color name="dNavBackground">#292f33</color>
     <color name="dText">#d2d2d2</color>
+    <color name="dBtnBackground">#5e6c75</color>
     <color name="dRVBackground">#1f2326</color>
-    <color name="goldenText">#e5b024</color>
+    <color name="dTitleText">#e5b024</color>
+    <color name="dCardViewBackground">#3c454b</color>
+    <color name="appBarBackground">#ef353434</color>
+    <color name="dFadeBackground">#737373</color>
+    <color name="dFadeTitleColor">#ffffff</color>
+    <color name="DppBarTitleColor">@color/dText</color>
+
+
+    <color name="LColorPrimary">#88B4B3</color>
+    <color name="LColorPrimaryDark">#2a7886</color>
+    <color name="LColorAccent">#01a9b4</color>
+    <color name="LBackground">#FFFFFF</color>
+    <color name="LHeader">@color/LColorPrimaryDark</color>
+    <color name="LToolbar">#01a9b4</color>
+    <color name="LNavBackground">#FFFFFF</color>
+    <color name="LText">#092532</color>
+    <color name="LBtnBackground">#e5dfdf</color>
+    <color name="LRVBackground">#eeeeee</color>
+    <color name="LTitleText">#086972</color>
+    <color name="LCardViewBackground">#eeeeee</color>
+    <color name="LappBarBackground">#01a9b4</color>
+    <color name="LFadeBackground">#737373</color>
+    <color name="LFadeTitleColor">#ffffff</color>
+    <color name="LppBarTitleColor">#ffffff</color>
 </resources>

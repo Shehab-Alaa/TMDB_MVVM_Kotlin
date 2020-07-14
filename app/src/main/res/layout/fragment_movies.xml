@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@color/colorAccent"
+            android:background="?attr/colorAccent"
             android:visibility="@{moviesViewModel.isLoading ? View.VISIBLE : View.INVISIBLE}"/>
 
     </RelativeLayout>

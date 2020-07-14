@@ -1,6 +1,9 @@
 package com.example.tmdbcleanarchitecture
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.tmdbcleanarchitecture.di.module.appModule
 import com.example.tmdbcleanarchitecture.di.module.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -19,4 +22,5 @@ class BaseApplication : Application() {
             modules(listOf(appModule , viewModelModule))
         }
     }
+
 }

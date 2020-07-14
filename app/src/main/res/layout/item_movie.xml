@@ -20,14 +20,14 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?attr/backgroundColor">
 
         <ImageView
             android:id="@+id/movie_poster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:background="@color/dBackground"
             android:posterSrc="@{movieItemViewModel.moviePoster}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:alpha="0.7"
-            android:background="#737373"
+            android:background="?attr/fadeBackground"
             android:padding="5dp">
 
             <TextView
@@ -46,7 +46,7 @@
                 android:gravity="center"
                 android:paddingLeft="6dp"
                 android:text="@{movieItemViewModel.movieTitle}"
-                android:textColor="#ffffff"
+                android:textColor="?attr/fadeTitleColor"
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </androidx.constraintlayout.widget.ConstraintLayout>

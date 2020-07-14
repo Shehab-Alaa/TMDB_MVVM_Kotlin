@@ -13,7 +13,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="5dp"
-    app:cardBackgroundColor="@color/colorPrimaryDark"
+    app:cardBackgroundColor="?attr/colorPrimaryDark"
     android:layout_margin="8dp">
 
     <LinearLayout
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="@{movieReview.author}"
             android:textSize="18dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="?attr/titleTextColor"
             android:textStyle="bold"/>
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="@{movieReview.content}"
             android:textSize="16dp"
-            android:textColor="@color/dText"
+            android:textColor="?attr/textColor"
             />
 
     </LinearLayout>

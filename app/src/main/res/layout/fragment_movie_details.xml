@@ -13,7 +13,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dNavBackground"
+        android:background="?attr/navDrawerBackground"
         tools:context=".ui.main.MainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -22,7 +22,7 @@
             android:layout_height="250dp"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:background="#ef353434">
+            android:background="?attr/appBarColor">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
@@ -83,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="25dp"
-            android:background="@color/dNavBackground"
+            android:background="?attr/navDrawerBackground"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
@@ -118,7 +118,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="16dp"
                             android:text="@{movieDetailsViewModel.movie.title}"
-                            android:textColor="@color/dText"
+                            android:textColor="?attr/textColor"
                             android:textSize="20dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="1.0"
@@ -131,7 +131,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:categoriesText="@{movieDetailsViewModel.movieDetailsLiveData.categories}"
-                            android:textColor="@color/dText"
+                            android:textColor="?attr/textColor"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.13"
                             app:layout_constraintStart_toStartOf="parent"
@@ -166,7 +166,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginTop="5dp"
                                 android:statusText="@{movieDetailsViewModel.movieDetailsLiveData.status}"
-                                android:textColor="@color/dText" />
+                                android:textColor="?attr/textColor" />
 
                         </LinearLayout>
 
@@ -197,19 +197,20 @@
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/dNavBackground">
-
-                    <TextView
-                        android:id="@+id/movie_overview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:padding="8dp"
-                        android:text="@{movieDetailsViewModel.movieDetailsLiveData.overview}"
-                        android:textColor="@color/dText"
-                        android:textSize="16sp" />
+                        android:backgroundTint="?attr/cardViewBackground"
+                        android:layout_margin="10dp">
+
+                        <TextView
+                            android:id="@+id/movie_overview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:padding="8dp"
+                            android:text="@{movieDetailsViewModel.movieDetailsLiveData.overview}"
+                            android:textColor="?attr/textColor"
+                            android:textSize="16sp" />
                     </androidx.cardview.widget.CardView>
 
                     <LinearLayout
@@ -217,7 +218,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="20dp"
-                        android:background="@color/dNavBackground">
+                        android:background="?attr/navDrawerBackground">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -236,7 +237,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{movieDetailsViewModel.movieDetailsLiveData.runtime + `m`}"
-                                android:textColor="@color/dText"
+                                android:textColor="?attr/textColor"
                                 android:layout_marginTop="5dp"
                                 android:layout_gravity="center"/>
 
@@ -259,7 +260,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{movieDetailsViewModel.movieDetailsLiveData.budget + `S`}"
-                                android:textColor="@color/dText"
+                                android:textColor="?attr/textColor"
                                 android:layout_marginTop="5dp"
                                 android:layout_gravity="center"/>
 
@@ -282,7 +283,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:isAdultMovie="@{movieDetailsViewModel.movieDetailsLiveData.adult}"
-                                android:textColor="@color/dText"
+                                android:textColor="?attr/textColor"
                                 android:layout_marginTop="5dp"
                                 android:layout_gravity="center"/>
 
@@ -300,7 +301,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@color/dRVBackground"
+                    android:background="?attr/recyclerViewBackground"
                     android:layout_marginTop="20dp">
 
                     <TextView
@@ -308,7 +309,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:text="@string/similar_movies"
-                        android:textColor="@color/goldenText"
+                        android:textColor="?attr/titleTextColor"
                         android:textSize="20dp"
                         android:textStyle="bold"
                         android:layout_marginTop="10dp"
@@ -333,7 +334,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@color/dRVBackground"
+                    android:background="?attr/recyclerViewBackground"
                     android:layout_marginTop="30dp">
 
                     <TextView
@@ -341,7 +342,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:text="@string/trailers"
-                        android:textColor="@color/goldenText"
+                        android:textColor="?attr/titleTextColor"
                         android:textSize="20dp"
                         android:textStyle="bold"
                         android:layout_marginTop="10dp"
@@ -367,7 +368,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:text="@string/reviews"
-                    android:textColor="@color/goldenText"
+                    android:textColor="?attr/titleTextColor"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:layout_marginTop="30dp"

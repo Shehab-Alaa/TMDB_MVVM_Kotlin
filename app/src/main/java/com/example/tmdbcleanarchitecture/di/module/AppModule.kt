@@ -31,6 +31,7 @@ val appModule = module {
     single { provideCache(get()) }
 
     single { provideAppDatabase(provideAppContext(get()) , provideDatabaseName())}
+    single { provideSharedPreferences(get())}
 }
 
 private fun provideRetrofit(okHttpClient: OkHttpClient) = Retrofit.Builder()
@@ -78,3 +79,5 @@ private fun provideAppDatabase(context : Context , databaseName : String) = Room
     .allowMainThreadQueries().build()
 
 private fun provideDataManager() = DataManager()
+
+private fun provideSharedPreferences(context: Context) = context.getSharedPreferences(AppConstants.PREF_NAME , Context.MODE_PRIVATE)

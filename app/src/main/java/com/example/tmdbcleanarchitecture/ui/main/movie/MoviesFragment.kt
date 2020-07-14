@@ -2,18 +2,13 @@ package com.example.tmdbcleanarchitecture.ui.main.movie
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
-import com.example.tmdbcleanarchitecture.data.DataManager
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
 import com.example.tmdbcleanarchitecture.databinding.FragmentMoviesBinding
 import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
@@ -91,6 +86,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , 
     }
 
     override fun onRetryClick() {
+        getViewModel().fetchMoviesPagedList()
     }
 
     override fun onResume() {
