@@ -9,9 +9,7 @@ object AppConstants {
     const val DARK_THEME = "dark_theme"
     const val LIGHT_THEME = "light_theme"
     const val DEFAULT_THEME = "default_theme"
-
-    const val VIEW_MODEL_KEY = "CreateViewModel"
-
+    
     const val NOW_PLAYING = "now_playing"
     const val POPULAR = "popular"
     const val TOP_RATED = "top_rated"

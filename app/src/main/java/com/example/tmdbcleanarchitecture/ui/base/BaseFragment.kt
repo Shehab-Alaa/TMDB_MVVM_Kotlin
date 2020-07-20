@@ -11,10 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 
-abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding , V : BaseViewModel> : Fragment() {
 
     private lateinit var viewDataBinding: T
-    private lateinit var viewModel: V
     private lateinit var navController: NavController
     private lateinit var mRootView : View
     private lateinit var mContext : Context
@@ -24,12 +23,6 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         mContext = context
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = initViewModel()
-    }
-
-    abstract fun initViewModel(): V
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
@@ -42,7 +35,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        viewDataBinding.setVariable(bindingVariable, viewModel)
+        viewDataBinding.setVariable(bindingVariable, getViewModel())
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
     }
@@ -57,9 +50,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         return navController
     }
 
-    fun getViewModel() : V {
-        return viewModel
-    }
+    abstract fun getViewModel() : V
 
     fun gerMRootView() : View{
         return mRootView

@@ -4,17 +4,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.SavedStateViewModelFactory
-import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 
 abstract class BaseActivity<T : ViewDataBinding , V : BaseViewModel> : AppCompatActivity() {
 
     private lateinit var mViewDataBinding: T
-    private lateinit var mViewModel: V
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewModel = initViewModel()
         performDataBinding()
     }
 
@@ -25,12 +21,8 @@ abstract class BaseActivity<T : ViewDataBinding , V : BaseViewModel> : AppCompat
     }
 
     abstract fun getLayoutId(): Int
-    abstract fun initViewModel(): V
 
-
-    fun getViewModel(): V {
-        return mViewModel
-    }
+    abstract fun getViewModel(): V
 
     fun getViewDataBinding(): T {
         return mViewDataBinding

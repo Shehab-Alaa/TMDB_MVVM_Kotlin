@@ -3,36 +3,30 @@ package com.example.tmdbcleanarchitecture.ui.main.favorite
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.SavedStateViewModelFactory
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
-import com.example.tmdbcleanarchitecture.data.DataManager
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
-import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.databinding.FragmentFavoriteMoviesBinding
 import com.example.tmdbcleanarchitecture.ui.base.BaseFragment
 import com.example.tmdbcleanarchitecture.utils.AppConstants
 import com.example.tmdbcleanarchitecture.utils.GridSpacingItemDecorationUtils
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 
 class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding, FavoriteMoviesViewModel>(),
     FavoriteMoviesAdapter.FavoritesAdapterListener {
 
+    private val favoriteMoviesViewModel : FavoriteMoviesViewModel by viewModel{ parametersOf(SavedStateHandle(mapOf()))}
     private val favoriteMoviesAdapter = FavoriteMoviesAdapter(mutableListOf() , this)
-    private val viewModelsFactory : ViewModelsFactory by inject { parametersOf(this)}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,13 +59,6 @@ class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding, Favor
         getViewDataBinding().favoriteMoviesRv.adapter = favoriteMoviesAdapter
     }
 
-
-    override fun initViewModel(): FavoriteMoviesViewModel {
-        return viewModelsFactory.create(AppConstants.VIEW_MODEL_KEY,FavoriteMoviesViewModel::class.java,
-            SavedStateHandle(mapOf())
-        )
-    }
-
     override val layoutId: Int
         get() = R.layout.fragment_favorite_movies
     override val bindingVariable: Int
@@ -88,6 +75,10 @@ class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding, Favor
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+    }
+
+    override fun getViewModel(): FavoriteMoviesViewModel {
+        return favoriteMoviesViewModel
     }
 
 }

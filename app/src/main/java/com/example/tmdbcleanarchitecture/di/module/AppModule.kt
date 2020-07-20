@@ -2,14 +2,10 @@ package com.example.tmdbcleanarchitecture.di.module
 
 import android.app.Application
 import android.content.Context
-import androidx.core.os.bundleOf
 import androidx.room.Room
-import androidx.savedstate.SavedStateRegistryOwner
-import com.example.tmdbcleanarchitecture.data.DataManager
 import com.example.tmdbcleanarchitecture.data.local.db.AppDatabase
 import com.example.tmdbcleanarchitecture.data.remote.network.ApiClient
 import com.example.tmdbcleanarchitecture.data.remote.network.ApiService
-import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.utils.AppConstants
 import com.example.tmdbcleanarchitecture.utils.NetworkUtils
 import okhttp3.Cache
@@ -22,8 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 val appModule = module {
-    single { provideDataManager()}
-
     single { get<Retrofit>().create(ApiService::class.java) }
     single { provideRetrofit(get()) }
     single { provideOkHttpClient(get() , get ()) }
@@ -77,7 +71,5 @@ private fun provideDatabaseName() = AppConstants.DATABASE_NAME
 
 private fun provideAppDatabase(context : Context , databaseName : String) = Room.databaseBuilder(context, AppDatabase::class.java, databaseName)
     .allowMainThreadQueries().build()
-
-private fun provideDataManager() = DataManager()
 
 private fun provideSharedPreferences(context: Context) = context.getSharedPreferences(AppConstants.PREF_NAME , Context.MODE_PRIVATE)

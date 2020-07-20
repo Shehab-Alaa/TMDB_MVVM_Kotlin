@@ -11,23 +11,20 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.widget.Toolbar
-import androidx.core.os.bundleOf
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModelProvider
 import com.example.tmdbcleanarchitecture.R
-import com.example.tmdbcleanarchitecture.data.DataManager
 import com.example.tmdbcleanarchitecture.databinding.ActivityMainBinding
-import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.ui.base.BaseActivity
 import com.example.tmdbcleanarchitecture.utils.AppConstants
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
+    private val mainViewModel : MainViewModel by viewModel{parametersOf(SavedStateHandle(mapOf()))}
     private val sharedPreferences : SharedPreferences by inject()
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val viewModelsFactory : ViewModelsFactory by inject { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setApplicationTheme()
@@ -78,7 +75,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
        return R.layout.activity_main
     }
 
-    override fun initViewModel(): MainViewModel {
-        return viewModelsFactory.create(AppConstants.VIEW_MODEL_KEY , MainViewModel::class.java , SavedStateHandle(mapOf()))
+    override fun getViewModel(): MainViewModel {
+        return mainViewModel
     }
+
+
 }

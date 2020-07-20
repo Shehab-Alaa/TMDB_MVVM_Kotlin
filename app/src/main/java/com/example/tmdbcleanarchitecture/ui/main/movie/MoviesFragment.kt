@@ -8,30 +8,29 @@ import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.SavedStateHandle
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
 import com.example.tmdbcleanarchitecture.databinding.FragmentMoviesBinding
-import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.ui.base.BaseFragment
 import com.example.tmdbcleanarchitecture.utils.AppConstants
 import com.example.tmdbcleanarchitecture.utils.GridLayoutManagerWrapper
 import com.example.tmdbcleanarchitecture.utils.GridSpacingItemDecorationUtils
-import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
 
 class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , MoviesAdapter.MoviesAdapterListener {
 
-    private val viewModelsFactory : ViewModelsFactory by inject { parametersOf(this) }
-    private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var moviesViewModel : MoviesViewModel
+    private val moviesAdapter: MoviesAdapter =  MoviesAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        moviesAdapter = MoviesAdapter(this)
+       val args = MoviesFragmentArgs.fromBundle(requireArguments())
+       moviesViewModel = getViewModel{ parametersOf(SavedStateHandle(mapOf(AppConstants.SELECTED_CATEGORY to args.categoryType))) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,15 +66,9 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , 
         getViewDataBinding().moviesRv.layoutAnimation = animation
         // equal spaces between grid items
         val includeEdge = true
-        getViewDataBinding().moviesRv.addItemDecoration(GridSpacingItemDecorationUtils(spanCount, spacing, includeEdge))
+        val gridSpacingItemDecorationUtils = GridSpacingItemDecorationUtils(spanCount , spacing , includeEdge)
+        getViewDataBinding().moviesRv.addItemDecoration(gridSpacingItemDecorationUtils)
         getViewDataBinding().moviesRv.adapter = moviesAdapter
-    }
-
-    override fun initViewModel(): MoviesViewModel {
-        val args : MoviesFragmentArgs = MoviesFragmentArgs.fromBundle(requireArguments())
-        return viewModelsFactory.create(AppConstants.VIEW_MODEL_KEY , MoviesViewModel::class.java , SavedStateHandle(
-            mapOf(AppConstants.SELECTED_CATEGORY to args.categoryType))
-        )
     }
 
     override val layoutId: Int
@@ -99,5 +92,10 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() , 
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
+
+    override fun getViewModel(): MoviesViewModel {
+        return moviesViewModel
+    }
+
 
 }

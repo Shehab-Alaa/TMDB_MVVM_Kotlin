@@ -24,23 +24,29 @@ import com.example.tmdbcleanarchitecture.R
 import com.example.tmdbcleanarchitecture.data.model.db.Movie
 import com.example.tmdbcleanarchitecture.data.model.details.MovieTrailer
 import com.example.tmdbcleanarchitecture.databinding.FragmentMovieDetailsBinding
-import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.ui.base.BaseFragment
 import com.example.tmdbcleanarchitecture.ui.main.movie_details.movie_reviews.MovieReviewsAdapter
 import com.example.tmdbcleanarchitecture.ui.main.movie_details.movie_trailers.MovieTrailersAdapter
 import com.example.tmdbcleanarchitecture.ui.main.movie_details.similar_movies.SimilarMoviesAdapter
 import com.example.tmdbcleanarchitecture.utils.AppConstants
-import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
 
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDetailsViewModel>(),
     SimilarMoviesAdapter.MoviesAdapterListener, MovieTrailersAdapter.MovieTrailersAdapterListener {
 
-    private val viewModelsFactory : ViewModelsFactory by inject { parametersOf(this) }
+    private lateinit var movieDetailsViewModel : MovieDetailsViewModel
     private val similarMoviesAdapter = SimilarMoviesAdapter(mutableListOf() , this)
     private val movieReviewsAdapter = MovieReviewsAdapter(mutableListOf())
     private val movieTrailersAdapter  = MovieTrailersAdapter(mutableListOf() , this)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val args = MovieDetailsFragmentArgs.fromBundle(requireArguments())
+        movieDetailsViewModel =  getViewModel{ parametersOf(SavedStateHandle(mapOf(AppConstants.SELECTED_MOVIE to args.selectedMovie)))}
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -57,13 +63,6 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
         initRecyclerView(getViewDataBinding().rvSimilarMovies , similarMoviesAdapter , RecyclerView.HORIZONTAL)
         initRecyclerView(getViewDataBinding().rvMovieTrailers , movieTrailersAdapter , RecyclerView.HORIZONTAL)
         initRecyclerView(getViewDataBinding().rvMovieReviews , movieReviewsAdapter , RecyclerView.VERTICAL)
-    }
-
-    override fun initViewModel(): MovieDetailsViewModel {
-        val args = MovieDetailsFragmentArgs.fromBundle(requireArguments())
-        return viewModelsFactory.create(AppConstants.VIEW_MODEL_KEY , MovieDetailsViewModel::class.java , SavedStateHandle(
-            mapOf(AppConstants.SELECTED_MOVIE to args.selectedMovie))
-        )
     }
 
     override val layoutId: Int
@@ -134,5 +133,10 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, MovieDeta
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
     }
+
+    override fun getViewModel(): MovieDetailsViewModel {
+        return movieDetailsViewModel
+    }
+
 
 }

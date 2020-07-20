@@ -9,17 +9,18 @@ import androidx.lifecycle.SavedStateHandle
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
 import com.example.tmdbcleanarchitecture.databinding.FragmentSettingsBinding
-import com.example.tmdbcleanarchitecture.di.ViewModelsFactory
 import com.example.tmdbcleanarchitecture.ui.base.BaseFragment
 import com.example.tmdbcleanarchitecture.utils.AppConstants
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel>() {
 
-    private val viewModelsFactory : ViewModelsFactory by inject { parametersOf(this) }
     private val sharedPreferences : SharedPreferences by inject()
+    private val selectedTheme = sharedPreferences.getString(AppConstants.SELECTED_THEME , AppConstants.DARK_THEME)
+    private val settingsViewModel : SettingsViewModel by viewModel{ parametersOf( SavedStateHandle(mapOf(AppConstants.SELECTED_THEME to selectedTheme)))}
     private var secondHit = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,15 +52,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         activity?.finish()
     }
 
-    override fun initViewModel(): SettingsViewModel {
-        val selectedTheme = sharedPreferences.getString(AppConstants.SELECTED_THEME , AppConstants.DARK_THEME)
-        return viewModelsFactory.create(AppConstants.VIEW_MODEL_KEY , SettingsViewModel::class.java , SavedStateHandle(
-            mapOf(AppConstants.SELECTED_THEME to selectedTheme)))
-    }
-
     override val layoutId: Int
         get() = R.layout.fragment_settings
     override val bindingVariable: Int
         get() = BR.settingsViewModel
+
+    override fun getViewModel(): SettingsViewModel {
+        return settingsViewModel
+    }
 
 }

@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.example.tmdbcleanarchitecture.BR
 import com.example.tmdbcleanarchitecture.R
@@ -20,8 +22,8 @@ class MoviesAdapter(val itemListener: MoviesAdapterListener) : BasePagedListAdap
 
    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder{
         return when(viewType){
-           AppConstants.VIEW_TYPE_NORMAL -> { MoviesViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context) , R.layout.item_movie , parent , false))}
-           else -> { EmptyMovieViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context) , R.layout.item_empty_movie , parent , false))}
+            AppConstants.VIEW_TYPE_NORMAL -> { MoviesViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context) , R.layout.item_movie , parent , false)) }
+           else -> { EmptyMovieViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context) , R.layout.item_empty_movie , parent , false)) }
        }
     }
 
